@@ -1,16 +1,18 @@
 
 out/
 
-
-
 # Compiled class file
 *.class
 
+
+*.iml
+.idea
+
 AdvancedDataStructures.iml
+
 
 # Log file
 *.log
-
 # BlueJ files
 *.ctxt
 
