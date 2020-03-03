@@ -1,22 +1,18 @@
 public class BST<T extends Comparable<T>> {
 
-    private Node<T> root;
-    private int nodeCount;
-
-    public BST(){
-        this.root = null;
-        this.nodeCount = 0;
-    }
-
-
 
     /**
-     * Method to remove any node
-     * @param value The value of the node to be removed
-     * @return true if it was removed, false otherwise
+     * Get the number of nodes in the tree
+     * @param root
+     * @return
      */
-    public Node<T> remove(T value){
-        return root = remove(root, value);
+    public int getNodeCount(Node<T> root){
+        if( root == null ){
+            return 0;
+        }
+        else{
+            return 1 + getNodeCount(root.left) + getNodeCount(root.right);
+        }
     }
 
 
@@ -51,18 +47,8 @@ public class BST<T extends Comparable<T>> {
                 node.value = temp.value;
                 node.right = remove(node.right, temp.value);
             }
-            nodeCount--;
         }
         return node;
-    }
-
-
-    /**
-     * helper method for insert method
-     * @param value the value of the new node to be added
-     */
-    public Node<T> insert(T value){
-        return root = insert(root, value);
     }
 
 
@@ -72,10 +58,9 @@ public class BST<T extends Comparable<T>> {
      * @param value Value to be inserted
      * @return the inserted node
      */
-    private Node<T> insert(Node<T> node, T value){
+    public Node<T> insert(Node<T> node, T value){
         if( node == null ){
-            node = new Node<T>(value);
-            nodeCount++;
+            node = new Node<>(value);
         }
         if( value.compareTo(node.value) < 0 ){
             node.left =  insert(node.left, value);
@@ -89,73 +74,21 @@ public class BST<T extends Comparable<T>> {
 
 
     /**
-     * Delete all nodes
-     */
-    public void clear(){
-        this.root = null;
-        this.nodeCount = 0;
-    }
-
-
-    /**
-     * Increase thee node count variable by one
-     */
-    public void incNodeCount(){
-        this.nodeCount++;
-    }
-
-    /**
-     * decrease the node count by one
-     */
-    public void decNodeCount(){
-        if( nodeCount > 0 ){
-            nodeCount--;
-        }
-    }
-
-
-    /**
-     * Get the total number of nodes in the tree
-     * @return node count
-     */
-    public int getNodeCount(){
-        return nodeCount;
-    }
-
-
-    /**
-     * Get the root of the tree
-     * @return the root node
-     */
-    public Node<T> getRoot(){
-        return this.root;
-    }
-
-
-    /**
-     * Set the root node of the tree
-     * @param node a node
-     */
-    public void setRoot(Node<T> node){
-        this.root = node;
-    }
-
-
-    /**
      * Check weather the tree is empty
      * @return true if empty, false otherwise
      */
-    public Boolean isEmpty(){
-        return nodeCount == 0;
+    public Boolean isEmpty(Node<T> root){
+        return root == null;
     }
 
 
     /**
      * Check whether tree contains a value
      * @param value the value to be searched
+     * @param root root node
      * @return true if found, false otherwise
      */
-    public Boolean contains(T value){
+    public Boolean contains(Node<T> root, T value){
 
         Node<T> current = root;
         while( current != null ){
@@ -176,9 +109,10 @@ public class BST<T extends Comparable<T>> {
     /**
      * Get the a node in the tree that matches a value
      * @param value the value of the node to be searched
+     * @param root root node
      * @return the node with the value
      */
-    public Node<T> get(T value){
+    public Node<T> get(Node<T> root, T value){
         Node<T> current = root;
         while (current != null){
 
@@ -195,6 +129,7 @@ public class BST<T extends Comparable<T>> {
         return null;
     }
 
+
     /**
      * Check if a node is a leaf node
      * @param node The node to be checked
@@ -204,13 +139,6 @@ public class BST<T extends Comparable<T>> {
         return (node.left == null && node.right == null);
     }
 
-    /**
-     * Get the tree height
-     * @return the height of the tree
-     */
-    public int getHeight(){
-        return getHeight(this.root);
-    }
 
 
     /**
@@ -255,8 +183,7 @@ public class BST<T extends Comparable<T>> {
     /**
      * inOrder print of the tree
      */
-    public  void inOrder(){ inOrder(root);}
-    private void inOrder(Node<T> node){
+    public void inOrder(Node<T> node){
         if( node != null ) {
             inOrder(node.left);
             System.out.print(node.value + " ");
@@ -268,8 +195,7 @@ public class BST<T extends Comparable<T>> {
     /**
      * pre order print
      */
-    public void preOrder(){preOrder(root);    }
-    private void preOrder(Node<T> node){
+    public void preOrder(Node<T> node){
         if( node != null ) {
             System.out.print(node.value + " ");
             preOrder(node.left);
@@ -281,8 +207,7 @@ public class BST<T extends Comparable<T>> {
     /**
      * post order print
      */
-    public void postOrder(){postOrder(root);}
-    private void postOrder(Node<T> node){
+    public void postOrder(Node<T> node){
         if( node != null ) {
             postOrder(node.getLeft());
             postOrder(node.getRight());

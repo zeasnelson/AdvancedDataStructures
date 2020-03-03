@@ -1,6 +1,11 @@
 public class AVL<T extends Comparable<T>> extends BST<T>{
 
 
+    /**
+     * Method to rotate a node to the left
+     * @param node the node to be rotated
+     * @return the new parent node
+     */
     private Node<T> leftRotate(Node<T> node){
         Node<T> rightNode = node.right;
         Node<T> leftNode  = rightNode.left;
@@ -11,6 +16,11 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
         return rightNode;
     }
 
+    /**
+     * Method to rotate to the left
+     * @param node the node to be rotated
+     * @return the new parent node
+     */
     private Node<T> rightRotate(Node<T> node){
         Node<T> leftNode  = node.left;
         Node<T> rightNode = leftNode.right;
@@ -21,6 +31,11 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
         return leftNode;
     }
 
+    /**
+     * Calculate the balance factor of a node
+     * @param node The node to check the balance factor
+     * @return the balance factor
+     */
     private int getBalanceFactor(Node<T> node){
         if( node == null ){
             return 0;
@@ -32,6 +47,11 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
     }
 
 
+    /**
+     * Check if a node is balanced or not
+     * @param node the node to be checked
+     * @return true if is balanced, false otherwise
+     */
     public Boolean isBalanced(Node<T> node){
         int l, r;
         if( node == null ){
@@ -45,33 +65,9 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
     }
 
 
+    @Override
     public Node<T> remove(Node<T> node, T value) {
-        if( node == null ){
-            return null;
-        }
-        if( value.compareTo(node.value) < 0 ){
-            node.left = remove(node.left, value);
-        }
-        else if( value.compareTo(node.value) > 0){
-            node.right = remove(node.right, value);
-        }
-        else{
-            // node with only one child or no child
-            if (isLeaf(node)){
-                Node<T> temp = node.left;
-                if (temp == null)
-                    temp = node.right;
-
-                // No child case
-                node = temp;
-            }
-            else{
-                Node<T> temp = getMin(node.right);
-                node.value = temp.value;
-                node.right = remove(node.right, temp.value);
-            }
-
-        }
+        node = super.remove(node, value);
 
         if (node == null)
             return null;
@@ -102,25 +98,8 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
 
 
     @Override
-    public Node<T> insert(T data){
-        Node<T> root = getRoot();
-        root = insert(root, data);
-        setRoot(root);
-        return root;
-    }
-
-
-    private Node<T> insert(Node<T> node, T value){
-       if( node == null ){
-            incNodeCount();
-           node = new Node<>(value);
-       }
-       if( value.compareTo(node.getValue()) < 0 ){
-           node.left =  insert(node.left, value);
-       }
-       if( value.compareTo(node.getValue()) > 0 ){
-           node.right = insert(node.right, value);
-       }
+    public Node<T> insert(Node<T> node, T value){
+       node = super.insert(node, value);
 
        //balance
        int balance = getBalanceFactor(node);
@@ -144,29 +123,48 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
             return leftRotate(node);
         }
 
-
        return node;
-
     }
 
 
     public static void main(String[] args) {
 
         AVL<Integer> avl = new AVL<>();
+        Node<Integer> root = null;
 
-        avl.insert(1);
-        avl.insert(2);
-        avl.insert(3);
-        avl.insert(4);
-        avl.insert(5);
-        avl.insert(6);
+        root = avl.insert(root, 1);
+        root = avl.insert(root, 2);
+        root = avl.insert(root, 3);
+        root = avl.insert(root, 4);
+        root = avl.insert(root, 5);
+        root = avl.insert(root, 6);
 
         System.out.println("delete");
-        System.out.println(avl.remove(6).value);
-        System.out.println(avl.remove(5).value);
-        System.out.println(avl.remove(1).value);
+        root = avl.remove(root, 6);
+        root = avl.remove(root, 5);
+        root = avl.remove(root, 1);
+        root = avl.remove(root, 3);
+        root = avl.insert(root, 5);
+        root = avl.insert(root, 7);
+        root = avl.insert(root, 9);
+        root = avl.remove(root, 7);
         System.out.println();
 
+
+        avl.preOrder(root);
+        System.out.println("\nmax is: " + avl.getMax(root).value);
+        System.out.println("min is: " + avl.getMin(root).value);
+        System.out.println("node count: " + avl.getNodeCount(root));
+        System.out.println("is empty: " + avl.isEmpty(root));
+        System.out.println("contains: " + avl.contains(root, 9));
+        System.out.println("contains non: " + avl.contains(root, 99));
+        System.out.println("get: " + avl.get(root, 5));
+        System.out.println("get non: " + avl.get(root, 88));
+        System.out.println("is leaf: " + avl.isLeaf(root));
+        System.out.println("is leaf: " + avl.isLeaf(new Node<>()));
+        System.out.println("height: " + avl.getHeight(root));
+        System.out.println("height non: " + avl.getHeight(new Node<>()));
+        System.out.println(avl.isBalanced(root));
 
     }
 

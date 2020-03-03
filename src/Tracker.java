@@ -1,19 +1,24 @@
 public class Tracker {
 
     /**
+     * Name of the algorithm/data structure
+     */
+    private String algorithmName;
+
+    /**
+     * Operation name being performed by the algorithm
+     */
+    private String operationName;
+
+    /**
      * Keeps count of number of swaps
      */
-    private Long swaps;
+    private Long dataMovement;
 
     /**
      * Keeps count of number of comparisons
      */
     private Long comparisons;
-
-    /**
-     * The name of the algorithm hows operations are being tracked
-     */
-    private String algorithmName;
 
     /**
      * To store the time an algorithm started
@@ -26,11 +31,12 @@ public class Tracker {
     private Long endTime;
 
 
-    public Tracker(String algorithmName) {
+    public Tracker(String algorithmName, String operationName) {
         Long zero = Long.valueOf(0);
-        this.swaps = zero;
+        this.dataMovement = zero;
         this.comparisons = zero;
         this.algorithmName = algorithmName;
+        this.operationName = operationName;
     }
 
     /**
@@ -47,8 +53,8 @@ public class Tracker {
     /**
      * Increment the swaps count by one
      */
-    public void incSwaps(){
-        this.swaps++;
+    public void incDataMovement(){
+        this.dataMovement++;
     }
 
     /**
@@ -81,12 +87,12 @@ public class Tracker {
         this.endTime = System.currentTimeMillis();
     }
 
-    public Long getSwaps() {
-        return swaps;
+    public Long getDataMovement() {
+        return dataMovement;
     }
 
-    public void setSwaps(Long swaps) {
-        this.swaps = swaps;
+    public void setDataMovement(Long dataMovement) {
+        this.dataMovement = dataMovement;
     }
 
     public Long getComparisons() {
@@ -108,30 +114,13 @@ public class Tracker {
     @Override
     public String toString() {
         return "Tracker{" +
-                "swaps=" + swaps +
+                "swaps=" + dataMovement +
                 ", comparisons=" + comparisons +
                 ", algorithmName='" + algorithmName + '\'' +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", totalTime=" + getTotalTimeMilli() +
                 '}';
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        Tracker tk = new Tracker("Shell");
-        tk.setStartTime();
-        tk.incComparisons();
-        tk.incComparisons();
-        tk.incComparisons();
-        tk.incComparisons();
-        tk.incComparisons();
-        tk.incComparisons();
-        Thread.sleep(1000);
-
-        tk.setEndTime();
-
-        System.out.println(tk);
-
     }
 
 }
