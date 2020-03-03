@@ -4,6 +4,7 @@ public class Node<T extends Comparable<T>> {
     protected Node<T> right;
     protected T value;
 
+    public Node(){}
 
     public Node(T value){
         this.value = value;

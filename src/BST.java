@@ -1,4 +1,4 @@
-public class BST<T extends Comparable<T>>{
+public class BST<T extends Comparable<T>> {
 
     private Node<T> root;
     private int nodeCount;
@@ -8,6 +8,86 @@ public class BST<T extends Comparable<T>>{
         this.nodeCount = 0;
     }
 
+
+
+    /**
+     * Method to remove any node
+     * @param value The value of the node to be removed
+     * @return true if it was removed, false otherwise
+     */
+    public Node<T> remove(T value){
+        return root = remove(root, value);
+    }
+
+
+    /**
+     * Method to remove any node
+     * @param value The value of the node to be removed
+     * @param node Root node
+     * @return true if it was removed, false otherwise
+     */
+    public Node<T> remove(Node<T> node, T value){
+        if( node == null ){
+            return null;
+        }
+        if( value.compareTo(node.value) < 0 ){
+            node.left = remove(node.left, value);
+        }
+        else if( value.compareTo(node.value) > 0){
+            node.right = remove(node.right, value);
+        }
+        else{
+            // node with only one child or no child
+            if (isLeaf(node)){
+                Node<T> temp = node.left;
+                if (temp == null)
+                    temp = node.right;
+
+                // No child case
+                node = temp;
+            }
+            else {
+                Node<T> temp = getMin(node.right);
+                node.value = temp.value;
+                node.right = remove(node.right, temp.value);
+            }
+            nodeCount--;
+        }
+        return node;
+    }
+
+
+    /**
+     * helper method for insert method
+     * @param value the value of the new node to be added
+     */
+    public Node<T> insert(T value){
+        return root = insert(root, value);
+    }
+
+
+    /**
+     * Given a root node, insert the value in the tree
+     * @param node Root node
+     * @param value Value to be inserted
+     * @return the inserted node
+     */
+    private Node<T> insert(Node<T> node, T value){
+        if( node == null ){
+            node = new Node<T>(value);
+            nodeCount++;
+        }
+        if( value.compareTo(node.value) < 0 ){
+            node.left =  insert(node.left, value);
+        }
+        if( value.compareTo(node.value) > 0 ){
+            node.right = insert(node.right, value);
+        }
+        return node;
+    }
+
+
+
     /**
      * Delete all nodes
      */
@@ -15,6 +95,33 @@ public class BST<T extends Comparable<T>>{
         this.root = null;
         this.nodeCount = 0;
     }
+
+
+    /**
+     * Increase thee node count variable by one
+     */
+    public void incNodeCount(){
+        this.nodeCount++;
+    }
+
+    /**
+     * decrease the node count by one
+     */
+    public void decNodeCount(){
+        if( nodeCount > 0 ){
+            nodeCount--;
+        }
+    }
+
+
+    /**
+     * Get the total number of nodes in the tree
+     * @return node count
+     */
+    public int getNodeCount(){
+        return nodeCount;
+    }
+
 
     /**
      * Get the root of the tree
@@ -24,9 +131,16 @@ public class BST<T extends Comparable<T>>{
         return this.root;
     }
 
+
+    /**
+     * Set the root node of the tree
+     * @param node a node
+     */
     public void setRoot(Node<T> node){
         this.root = node;
     }
+
+
     /**
      * Check weather the tree is empty
      * @return true if empty, false otherwise
@@ -35,13 +149,6 @@ public class BST<T extends Comparable<T>>{
         return nodeCount == 0;
     }
 
-    /**
-     * Get the total number of nodes in the tree
-     * @return node count
-     */
-    public int getNodeCount(){
-        return nodeCount;
-    }
 
     /**
      * Check whether tree contains a value
@@ -64,6 +171,7 @@ public class BST<T extends Comparable<T>>{
         }
         return false;
     }
+
 
     /**
      * Get the a node in the tree that matches a value
@@ -97,172 +205,18 @@ public class BST<T extends Comparable<T>>{
     }
 
     /**
-     * Check if a node has two children
-     * @param node The node to be checked
-     * @return True if has two children, false otherwise
+     * Get the tree height
+     * @return the height of the tree
      */
-    public Boolean hasTwoChildren(Node<T> node){
-        return (node.right != null && node.left != null);
+    public int getHeight(){
+        return getHeight(this.root);
     }
 
-    /**
-     * Check if a node has one child
-     * @param node The node to be checked
-     * @return True if has one children, false otherwise
-     */
-    public Boolean hasOneChild(Node<T> node){
-        return (node.left == null && node.right != null ) ||
-                (node.left != null && node.right == null );
-    }
-
-    /**
-     * Function to delete only leaf nodes
-     * @param parent parent of the leaf node
-     * @param child the leaf node
-     * @return true if it was deleted, false otherwise
-     */
-    private Boolean deleteLeaf(Node<T> parent, Node<T> child){
-        if( parent == null && child == null ){
-            return false;
-        }
-        else if( parent == null ){
-            root = null;
-        }
-        else if( child.value.compareTo(parent.value) < 0 ){
-            parent.left = null;
-        }
-        else if( child.value.compareTo(parent.value) > 0 )
-            parent.right = null;
-
-        nodeCount--;
-        return true;
-    }
-
-    /**
-     * Method to remove nodes that have only one child
-     * @param parent The parent of the node with only one child
-     * @param child a node with only one child
-     * @return
-     */
-    private Boolean deleteWithOneChild(Node<T> parent, Node<T> child){
-        if( parent == null && child == null ){
-            return false;
-        }
-        else if( parent == null ){
-            if( child.left != null ){
-                root = child.left;
-            }
-            else
-                root = child.right;
-        }
-        else {
-            if( child.value.compareTo(parent.value) > 0 ){
-                if( child.left != null )
-                    parent.right = child.left;
-                else
-                    parent.right = child.right;
-            }
-            if( child.value.compareTo(parent.value) < 0 ){
-                if( child.left != null )
-                    parent.left = child.left;
-                else
-                    parent.left = child.right;
-            }
-        }
-        nodeCount--;
-        return true;
-    }
-
-    /**
-     * Method to delete node that have two children
-     * @param parent The parent node of a node with two children
-     * @param child a node with two children
-     * @return true if it was deleted, false otherwise
-     */
-    private Boolean deleteWithTwoChild(Node<T> parent, Node<T> child){
-        if( parent == null && child == null ){
-            return false;
-        }
-        else {
-            Node<T> prev = null;
-            Node<T> current = child.right;
-            if( current.left == null ){
-                child.value = current.value;
-                child.right = current.right;
-            }
-            else{
-                while (current.left != null){
-                    prev = current;
-                    current = current.left;
-                }
-                child.value = current.value;
-                prev.left = null;
-            }
-        }
-        nodeCount--;
-        return true;
-    }
-
-
-    /**
-     * Method to remove any node
-     * @param value The value of the node to be removed
-     * @return true if it was removed, false otherwise
-     */
-    public Boolean remove(T value){
-        Node<T> previous = null;
-        Node<T> current = root;
-        while (current != null){
-            if( value.compareTo(current.value) == 0 ){
-                if( isLeaf(current) ){
-                    return deleteLeaf(previous, current);
-                }
-                else if( hasOneChild(current) ){
-                    return deleteWithOneChild(previous, current);
-                }
-                else if( hasTwoChildren(current) ){
-                    return deleteWithTwoChild(previous, current);
-                }
-            }
-            else if( value.compareTo(current.value) < 0 ){
-                previous = current;
-                current = current.left;
-            }
-            else if( value.compareTo(current.value) > 0 ){
-                previous = current;
-                current = current.right;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * helper method for insert method
-     * @param value the value of the new node to be added
-     */
-    public Node<T> insert(T value){
-        return root = insert(root, value);
-    }
-
-    public Node<T> insert(Node<T> node, T value){
-        if( node == null ){
-            node = new Node(value);
-            nodeCount++;
-        }
-        if( value.compareTo(node.value) < 0 ){
-            node.left =  insert(node.left, value);
-        }
-        if( value.compareTo(node.value) > 0 ){
-            node.right = insert(node.right, value);
-        }
-        return node;
-    }
 
     /**
      * Get the tree height
      * @return the height of the tree
      */
-    public int getHeight(){return getHeight(root);}
     public int getHeight(Node<T> node){
         if( node == null ){
             return 0;
@@ -273,31 +227,30 @@ public class BST<T extends Comparable<T>>{
         return 1 + Math.max(lh, rh);
     }
 
+
     /**
      * Find the max value from the tree
      * @return the max value
      */
-    public Node<T> getMax(){
-        Node<T> current = root;
-        while (current.right != null){
-            current = current.right;
+    public Node<T> getMax(Node<T> node){
+        while (node.right != null){
+            node = node.right;
         }
-
-        return current;
+        return node;
     }
+
 
     /**
      * Find the min value from the tree
      * @return the min value
      */
-    public Node<T> getMin(){
-        Node<T> current = root;
-        while (current.left != null){
-            current = current.left;
+    public Node<T> getMin(Node<T> node){
+        while (node.left != null){
+            node = node.left;
         }
-
-        return current;
+        return node;
     }
+
 
     /**
      * inOrder print of the tree
@@ -305,11 +258,12 @@ public class BST<T extends Comparable<T>>{
     public  void inOrder(){ inOrder(root);}
     private void inOrder(Node<T> node){
         if( node != null ) {
-            inOrder(node.getLeft());
-            System.out.println(node.getValue());
-            inOrder(node.getRight());
+            inOrder(node.left);
+            System.out.print(node.value + " ");
+            inOrder(node.right);
         }
     }
+
 
     /**
      * pre order print
@@ -317,11 +271,12 @@ public class BST<T extends Comparable<T>>{
     public void preOrder(){preOrder(root);    }
     private void preOrder(Node<T> node){
         if( node != null ) {
-            System.out.println(node.getValue());
-            preOrder(node.getLeft());
-            preOrder(node.getRight());
+            System.out.print(node.value + " ");
+            preOrder(node.left);
+            preOrder(node.right);
         }
     }
+
 
     /**
      * post order print
@@ -331,20 +286,8 @@ public class BST<T extends Comparable<T>>{
         if( node != null ) {
             postOrder(node.getLeft());
             postOrder(node.getRight());
-            System.out.println(node.getValue());
+            System.out.print(node.getValue() + " ");
         }
-    }
-
-    public static void main(String[] args) {
-        BST<Integer> tree = new BST<>();
-        tree.insert(1);
-        tree.insert(2);
-        tree.insert(3);
-        tree.insert(4);
-        tree.insert(5);
-        tree.preOrder();
-        System.out.println("Tree height: " + tree.getHeight());
-
     }
 
 }
