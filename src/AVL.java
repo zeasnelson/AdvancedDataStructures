@@ -1,5 +1,3 @@
-import javax.sound.midi.Track;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class AVL<T extends Comparable<T>> extends BST<T>{
