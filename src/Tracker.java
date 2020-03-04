@@ -1,19 +1,39 @@
 public class Tracker {
 
     /**
+     * To store the output of the function being tracked
+     */
+    private String funcOutput;
+
+    /**
+     * To store the function parameter value/s
+     */
+    private String parameters;
+
+    /**
+     * Name of the algorithm/data structure
+     */
+    private String algorithmName;
+
+    /**
+     * Operation name being performed by the algorithm
+     */
+    private String operationName;
+
+    /**
+     * Nodes traversed
+     */
+    private Long nodesTraversed;
+
+    /**
      * Keeps count of number of swaps
      */
-    private Long swaps;
+    private Long dataMovement;
 
     /**
      * Keeps count of number of comparisons
      */
     private Long comparisons;
-
-    /**
-     * The name of the algorithm hows operations are being tracked
-     */
-    private String algorithmName;
 
     /**
      * To store the time an algorithm started
@@ -26,11 +46,15 @@ public class Tracker {
     private Long endTime;
 
 
-    public Tracker(String algorithmName) {
+    public Tracker(String operationName) {
         Long zero = Long.valueOf(0);
-        this.swaps = zero;
+        this.dataMovement = zero;
         this.comparisons = zero;
-        this.algorithmName = algorithmName;
+        this.nodesTraversed = zero;
+        this.algorithmName = "";
+        this.operationName = operationName;
+        this.funcOutput = "";
+        this.parameters = "";
     }
 
     /**
@@ -47,8 +71,8 @@ public class Tracker {
     /**
      * Increment the swaps count by one
      */
-    public void incSwaps(){
-        this.swaps++;
+    public void incDataMovement(){
+        this.dataMovement++;
     }
 
     /**
@@ -56,6 +80,13 @@ public class Tracker {
      */
     public void incComparisons(){
         this.comparisons++;
+    }
+
+    /**
+     * Increment the nodesTraversed by one
+     */
+    public void incNodesTraversed(){
+        this.nodesTraversed++;
     }
 
 
@@ -66,13 +97,6 @@ public class Tracker {
         this.startTime = System.currentTimeMillis();
     }
 
-    public Long getStartTime(){
-        return this.startTime;
-    }
-
-    public Long getEndTime(){
-        return this.endTime;
-    }
 
     /**
      * automatically stores the current time in milliseconds
@@ -81,12 +105,60 @@ public class Tracker {
         this.endTime = System.currentTimeMillis();
     }
 
-    public Long getSwaps() {
-        return swaps;
+    public String getFuncOutput() {
+        return funcOutput;
     }
 
-    public void setSwaps(Long swaps) {
-        this.swaps = swaps;
+    public void setFuncOutput(String funcOutput) {
+        this.funcOutput = funcOutput;
+    }
+
+    public String getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(String parameters) {
+        this.parameters = parameters;
+    }
+
+    public Long getStartTime(){
+        return this.startTime;
+    }
+
+    public Long getEndTime(){
+        return this.endTime;
+    }
+
+    public String getOperationName() {
+        return operationName;
+    }
+
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
+    }
+
+    public Long getNodesTraversed() {
+        return nodesTraversed;
+    }
+
+    public void setNodesTraversed(Long nodesTraversed) {
+        this.nodesTraversed = nodesTraversed;
+    }
+
+    public void setStartTime(Long startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(Long endTime) {
+        this.endTime = endTime;
+    }
+
+    public Long getDataMovement() {
+        return dataMovement;
+    }
+
+    public void setDataMovement(Long dataMovement) {
+        this.dataMovement = dataMovement;
     }
 
     public Long getComparisons() {
@@ -105,33 +177,18 @@ public class Tracker {
         this.algorithmName = algorithmName;
     }
 
+
     @Override
-    public String toString() {
-        return "Tracker{" +
-                "swaps=" + swaps +
-                ", comparisons=" + comparisons +
-                ", algorithmName='" + algorithmName + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", totalTime=" + getTotalTimeMilli() +
-                '}';
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        Tracker tk = new Tracker("Shell");
-        tk.setStartTime();
-        tk.incComparisons();
-        tk.incComparisons();
-        tk.incComparisons();
-        tk.incComparisons();
-        tk.incComparisons();
-        tk.incComparisons();
-        Thread.sleep(1000);
-
-        tk.setEndTime();
-
-        System.out.println(tk);
-
+    public String toString(){
+        return "Operation Name:               " + operationName +
+                "\nParameter/s:               " + (parameters == "" ? "none"    : this.parameters) +
+                "\nOutput:                    " + (funcOutput == "" ? "none"    : this.funcOutput) +
+                "\nNumber of nodes traversed: " + (nodesTraversed == 0 ? "none" : this.nodesTraversed) +
+                "\nSwaps/Data moved:          " + (dataMovement == 0 ? "none"   : this.dataMovement) +
+                "\nNumber of comparisons:     " + (comparisons == 0 ? "node"    : this.comparisons) +
+                "\nMilli start time:          " + startTime +
+                "\nMilli end time:            " + endTime +
+                "\nTotal time:                " + getTotalTimeMilli() + "\n\n";
     }
 
 }

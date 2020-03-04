@@ -1,15 +1,44 @@
 public class Node<T extends Comparable<T>> {
 
+    /**
+     * left child
+     */
     protected Node<T> left;
+
+    /**
+     * right child
+     */
     protected Node<T> right;
+
+    /**
+     * Value of the node
+     */
     protected T value;
 
-    public Node(){}
+    /**
+     * if duplicates are being inserted, user a counter to indicate the # of repetitions
+     */
+    protected int valueCount;
+
 
     public Node(T value){
         this.value = value;
+        this.left = null;
+        this.right = null;
+        this.valueCount = 0;
     }
 
+
+
+    //getters and setters
+
+    public int getValueCount() {
+        return valueCount;
+    }
+
+    public void setValueCount(int valueCount) {
+        this.valueCount = valueCount;
+    }
 
     public Node getLeft() {
         return left;
@@ -38,9 +67,10 @@ public class Node<T extends Comparable<T>> {
     @Override
     public String toString() {
         return "Node{" +
-                "leftNode=" + left +
-                ", rightNode=" + right +
-                ", data=" + value +
+                "left=" + left +
+                ", right=" + right +
+                ", value=" + value +
+                ", valueCount=" + valueCount +
                 '}';
     }
 }

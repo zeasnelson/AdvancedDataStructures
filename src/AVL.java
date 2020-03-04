@@ -1,7 +1,19 @@
+import javax.sound.midi.Track;
+import java.util.ArrayList;
+import java.util.Random;
+
 public class AVL<T extends Comparable<T>> extends BST<T>{
 
 
-    private Node<T> leftRotate(Node<T> node){
+    /**
+     * Method to rotate a node to the left
+     * @param node the node to be rotated
+     * @return the new parent node
+     */
+    private Node<T> leftRotate(Node<T> node, Tracker tracker){
+        //each rotation will count as one data movement
+        tracker.incDataMovement();
+
         Node<T> rightNode = node.right;
         Node<T> leftNode  = rightNode.left;
 
@@ -11,7 +23,16 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
         return rightNode;
     }
 
-    private Node<T> rightRotate(Node<T> node){
+    /**
+     * Method to rotate to the left
+     * @param node the node to be rotated
+     * @return the new parent node
+     */
+    private Node<T> rightRotate(Node<T> node, Tracker tracker){
+
+        //each rotation will count as one data movement
+        tracker.incDataMovement();
+
         Node<T> leftNode  = node.left;
         Node<T> rightNode = leftNode.right;
 
@@ -21,153 +42,136 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
         return leftNode;
     }
 
-    private int getBalanceFactor(Node<T> node){
+    /**
+     * Calculate the balance factor of a node
+     * @param node The node to check the balance factor
+     * @return the balance factor
+     */
+    private int getBalanceFactor(Node<T> node, Tracker tracker){
         if( node == null ){
             return 0;
         }
 
-        int leftHeight = getHeight(node.left);
-        int rightHeight = getHeight(node.right);
+        int leftHeight = getHeight(node.left, tracker);
+        int rightHeight = getHeight(node.right, tracker);
         return leftHeight - rightHeight;
     }
 
 
-    public Boolean isBalanced(Node<T> node){
+    /**
+     * Check if a node is balanced or not
+     * @param node the node to be checked
+     * @return true if is balanced, false otherwise
+     */
+    public Boolean isBalanced(Node<T> node, Tracker tracker){
         int l, r;
         if( node == null ){
             return true;
         }
-        l = getHeight(node.left);
-        r = getHeight(node.right);
+        l = getHeight(node.left, tracker);
+        r = getHeight(node.right, tracker);
 
-        return (Math.abs(l-r) <= 1 && isBalanced(node.left) && isBalanced(node.right));
+        return (Math.abs(l-r) <= 1 && isBalanced(node.left, tracker) && isBalanced(node.right, tracker));
 
     }
 
 
-    public Node<T> remove(Node<T> node, T value) {
-        if( node == null ){
-            return null;
-        }
-        if( value.compareTo(node.value) < 0 ){
-            node.left = remove(node.left, value);
-        }
-        else if( value.compareTo(node.value) > 0){
-            node.right = remove(node.right, value);
-        }
-        else{
-            // node with only one child or no child
-            if (isLeaf(node)){
-                Node<T> temp = node.left;
-                if (temp == null)
-                    temp = node.right;
-
-                // No child case
-                node = temp;
-            }
-            else{
-                Node<T> temp = getMin(node.right);
-                node.value = temp.value;
-                node.right = remove(node.right, temp.value);
-            }
-
-        }
+    @Override
+    public Node<T> remove(Node<T> node, T value, Tracker tracker) {
+        node = super.remove(node, value, tracker);
 
         if (node == null)
             return null;
 
-        int balance = getBalanceFactor(node);
+        //Each iteration will count as a comparison
+        tracker.incComparisons();
+
+        int balance = getBalanceFactor(node, tracker);
 
         // Left Left Case
-        if (balance > 1 && getBalanceFactor(node.left) >= 0)
-            return rightRotate(node);
+        if (balance > 1 && getBalanceFactor(node.left, tracker) >= 0)
+            return rightRotate(node, tracker);
 
         // Left Right Case
-        else if (balance > 1 && getBalanceFactor(node.left) < 0){
-            node.left = leftRotate(node.left);
-            return rightRotate(node);
+        else if (balance > 1 && getBalanceFactor(node.left, tracker) < 0){
+            node.left = leftRotate(node.left, tracker);
+            return rightRotate(node, tracker);
         }
 
         // Right Right Case
-        else if (balance < -1 && getBalanceFactor(node.right) <= 0)
-            return leftRotate(node);
+        else if (balance < -1 && getBalanceFactor(node.right, tracker) <= 0)
+            return leftRotate(node, tracker);
 
         // Right Left Case
-        else if (balance < -1 && getBalanceFactor(node.right) > 0) {
-            node.right = rightRotate(node.right);
-            return leftRotate(node);
+        else if (balance < -1 && getBalanceFactor(node.right, tracker) > 0) {
+            node.right = rightRotate(node.right, tracker);
+            return leftRotate(node, tracker);
         }
         return node;
     }
 
 
     @Override
-    public Node<T> insert(T data){
-        Node<T> root = getRoot();
-        root = insert(root, data);
-        setRoot(root);
-        return root;
-    }
+    public Node<T> insert(Node<T> node, T value, Tracker tracker){
+       node = super.insert(node, value, tracker);
 
-
-    private Node<T> insert(Node<T> node, T value){
-       if( node == null ){
-            incNodeCount();
-           node = new Node<>(value);
-       }
-       if( value.compareTo(node.getValue()) < 0 ){
-           node.left =  insert(node.left, value);
-       }
-       if( value.compareTo(node.getValue()) > 0 ){
-           node.right = insert(node.right, value);
-       }
+        //Each iteration will count as a comparison
+        tracker.incComparisons();
 
        //balance
-       int balance = getBalanceFactor(node);
+       int balance = getBalanceFactor(node, tracker);
 
         //left left rotation
         if( balance > 1 && value.compareTo(node.left.value) < 0 ){
-            return rightRotate(node);
+            return rightRotate(node, tracker);
         }
         //Right Right rotation
         if( balance < -1 && value.compareTo(node.right.value) > 0 ){
-            return leftRotate(node);
+            return leftRotate(node, tracker);
         }
         //Left Right rotation
         if( balance > 1 && value.compareTo(node.left.value) > 0 ){
-            node.left = leftRotate(node.left);
-            return rightRotate(node);
+            node.left = leftRotate(node.left, tracker);
+            return rightRotate(node, tracker);
         }
         //Right Left rotation
         if( balance < -1 && value.compareTo(node.right.value) < 0 ){
-            node.right = rightRotate(node.right);
-            return leftRotate(node);
+            node.right = rightRotate(node.right, tracker);
+            return leftRotate(node, tracker);
         }
 
-
        return node;
-
     }
 
 
     public static void main(String[] args) {
 
-        AVL<Integer> avl = new AVL<>();
 
-        avl.insert(1);
-        avl.insert(2);
-        avl.insert(3);
-        avl.insert(4);
-        avl.insert(5);
-        avl.insert(6);
+        Random rand = new Random();
 
-        System.out.println("delete");
-        System.out.println(avl.remove(6).value);
-        System.out.println(avl.remove(5).value);
-        System.out.println(avl.remove(1).value);
-        System.out.println();
+        int [] nums = new int[10000];
+        for( int i = 0; i < nums.length; i++){
+            nums[i] = rand.nextInt(10000);
+        }
+        System.out.println("done with arr");
+
+        AVL<Integer> tree = new AVL<>();
+
+        for( Integer i : nums ){
+            tree.insert(i);
+        }
 
 
+        Tracker deleteTracker = tree.remove(7);
+        Tracker insertTracker = tree.insert(7);
+        Tracker nodeCountTracker = tree.getNodeCount();
+        Tracker getMinTracker = tree.getMin();
+
+        System.out.println(deleteTracker);
+        System.out.println(insertTracker);
+        System.out.println(nodeCountTracker);
+        System.out.println(getMinTracker);
+        System.out.println(tree.getHeight());
     }
 
 
