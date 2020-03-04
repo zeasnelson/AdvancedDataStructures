@@ -3,6 +3,11 @@ import java.util.Random;
 
 public class Test {
 
+    /**
+     * Generate n random numbers, can be duplicate numbers
+     * @param n The range of the random numbers 0 - n
+     * @return An array that contains all random numbers of size n
+     */
     public static int [] randomNumbers(int n){
         Random rand = new Random();
         int [] numbers = new int[n];
@@ -12,24 +17,29 @@ public class Test {
         return numbers;
     }
 
-    public static int[] uniqueRandonNumbers(int n){
+    /**
+     * Generate n random unique numbers - no duplicates
+     * @param n The range of the random numbers 0 - n
+     * @return An array containing all numbers generated of size n
+     */
+    public static int[] uniqueRandomNumbers(int n){
         Random rand = new Random();
-        int [] repeatedNums = new int[n];
-        int [] uniqueNums = new int[n];
+        int [] repeatedNum = new int[n];
+        int [] uniqueNum = new int[n];
 
         for( int i = 0; i < n; i++ ){
-            repeatedNums[i] = 0;
+            repeatedNum[i] = 0;
         }
 
         for(int i = 0; i < n; ){
             int ranNum = rand.nextInt(n);
-            if( repeatedNums[ranNum] == 0 ){
-                uniqueNums[i] = ranNum;
-                repeatedNums[ranNum]++;
+            if( repeatedNum[ranNum] == 0 ){
+                uniqueNum[i] = ranNum;
+                repeatedNum[ranNum]++;
                 i++;
             }
         }
-        return uniqueNums;
+        return uniqueNum;
     }
 
     public static void main(String[] args) {
@@ -40,7 +50,7 @@ public class Test {
 
         System.out.println("Generating data");
         int [] notUniqueNum = randomNumbers(n);
-        int [] uniqueNum = uniqueRandonNumbers(n);
+        int [] uniqueNum = uniqueRandomNumbers(n);
 
         AVL<Integer> avlUniqueNum = new AVL<>();
         AVL<Integer> avlRandomNum = new AVL<>();
@@ -61,7 +71,7 @@ public class Test {
         System.out.println("That's it baby\n\n");
 
         //Every function was implemented such that comparisons, data movement, nodes traversed,
-        //stat time, end time, etc... are tracked
+        //start time, end time, etc... are tracked
 
         //Get the tracking info from the avl tree with random numbers(not unique numbers)
         System.out.println("AVL tree with random numbers");
