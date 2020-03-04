@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class BST<T extends Comparable<T>> {
 
@@ -15,6 +14,38 @@ public class BST<T extends Comparable<T>> {
     public void setRoot(Node<T> root) {
         this.root = root;
     }
+
+    /**
+     * Perform a node count of only unique values but return a count of its operation instead.
+     * Tracks comparisons, data movements, number of nodes traversed etc
+     * @return A Tracker obj
+     */
+    public Tracker uniqueNodeCount(){
+        Tracker tracker = new Tracker("uniqueNodeCount");
+        tracker.setStartTime();
+        int output = uniqueNodeCount(this.root, tracker);
+        tracker.setEndTime();
+        tracker.setFuncOutput(Integer.toString(output));
+        return tracker;
+    }
+
+    /**
+     * Count all nodes that have a unique value
+     * @param root the root node
+     * @param tracker An object to keep track of comparisons, data swaps, etc
+     * @return the number of unique nodes in the tree
+     */
+    public int uniqueNodeCount(Node<T> root, Tracker tracker){
+        if( root == null ){
+            return 0;
+        }
+        else {
+            //track the number of nodes traversed
+            tracker.incNodesTraversed();
+            return 1 + uniqueNodeCount(root.left, tracker) + uniqueNodeCount(root.right, tracker);
+        }
+    }
+
 
 
     /**
@@ -39,10 +70,10 @@ public class BST<T extends Comparable<T>> {
      */
     public int getNodeCount(Node<T> root, Tracker tracker){
         if( root == null ){
-            tracker.incComparisons();
             return 0;
         }
-        else{
+        else {
+            tracker.incNodesTraversed();
             return root.valueCount + getNodeCount(root.left, tracker) + getNodeCount(root.right, tracker);
         }
     }
@@ -59,7 +90,6 @@ public class BST<T extends Comparable<T>> {
         tracker.setParameters(value.toString());
         tracker.setStartTime();
         this.root = remove(this.root, value, tracker);
-        tracker.setFuncOutput("Too large to display");
         tracker.setEndTime();
         return tracker;
     }
@@ -128,7 +158,6 @@ public class BST<T extends Comparable<T>> {
         tracker.setParameters(value.toString());
         tracker.setStartTime();
         root = insert(root, value, tracker);
-        tracker.setFuncOutput("Too large to display");
         tracker.setEndTime();
         return tracker;
     }
@@ -209,9 +238,11 @@ public class BST<T extends Comparable<T>> {
                 return true;
             }
             else if( value.compareTo(current.value) < 0 ){
+                tracker.incNodesTraversed();
                 current = current.left;
             }
             else if( value.compareTo(current.value) > 0 ){
+                tracker.incNodesTraversed();
                 current = current.right;
             }
         }
@@ -232,7 +263,7 @@ public class BST<T extends Comparable<T>> {
         tracker.setStartTime();
         Node<T> output = get(this.root, value, tracker);
         tracker.setEndTime();
-        tracker.setFuncOutput(output.toString());
+        tracker.setFuncOutput((output == null ? "none" : output.value).toString());
         return tracker;
     }
 
@@ -249,8 +280,8 @@ public class BST<T extends Comparable<T>> {
         Node<T> current = root;
         while (current != null){
 
-            //Track number of comparisons, there should be one at each level
             tracker.incComparisons();
+            tracker.incNodesTraversed();
 
             if( value.compareTo(current.value) == 0 ){
                 return current;
@@ -322,7 +353,7 @@ public class BST<T extends Comparable<T>> {
         tracker.setStartTime();
         Node<T> output = getMax(this.root, tracker);
         tracker.setEndTime();
-        tracker.setFuncOutput(output.toString());
+        tracker.setFuncOutput((output == null ? "none" : output.value).toString());
         return tracker;
     }
 
@@ -351,9 +382,9 @@ public class BST<T extends Comparable<T>> {
     public Tracker getMin(){
         Tracker tracker = new Tracker("getMin");
         tracker.setStartTime();
-        Node<T> output = getMin(this.root, tracker);
+        Node<T> output = getMin(root, tracker);
         tracker.setEndTime();
-        tracker.setFuncOutput(output.toString());
+        tracker.setFuncOutput((output == null ? "none" : output.value).toString());
         return tracker;
     }
 
@@ -366,6 +397,7 @@ public class BST<T extends Comparable<T>> {
      */
     public Node<T> getMin(Node<T> node, Tracker tracker){
         while (node.left != null){
+            tracker.incNodesTraversed();
             node = node.left;
         }
         return node;
@@ -382,7 +414,6 @@ public class BST<T extends Comparable<T>> {
         tracker.setStartTime();
         inOrder(this.root, tracker);
         tracker.setEndTime();
-        tracker.setFuncOutput("To large to display");
         return tracker;
     }
 
@@ -399,7 +430,7 @@ public class BST<T extends Comparable<T>> {
             tracker.incNodesTraversed();
 
             inOrder(node.left, tracker);
-            System.out.print(node.value + " ");
+           // System.out.print(node.value + " ");
             inOrder(node.right, tracker);
         }
         return tracker;
@@ -431,7 +462,7 @@ public class BST<T extends Comparable<T>> {
             //count number of nodes traversed
             tracker.incNodesTraversed();
 
-            System.out.print(node.value + " ");
+            //System.out.print(node.value + " ");
             preOrder(node.left, tracker);
             preOrder(node.right, tracker);
         }
@@ -447,7 +478,6 @@ public class BST<T extends Comparable<T>> {
         tracker.setStartTime();
         postOrder(this.root, tracker);
         tracker.setEndTime();
-        tracker.setFuncOutput("To large to display");
         return tracker;
     }
 
@@ -463,35 +493,9 @@ public class BST<T extends Comparable<T>> {
 
             postOrder(node.getLeft(), tracker);
             postOrder(node.getRight(), tracker);
-            System.out.print(node.getValue() + " ");
+            //System.out.print(node.getValue() + " ");
         }
     }
-
-
-    public static void main(String[] args) {
-        BST<Integer> tree = new BST<>();
-
-
-        tree.insert(10);
-        tree.insert(11);
-        tree.insert(8);
-        tree.insert(12);
-        tree.insert(7);
-
-        Tracker deleteTracker = tree.remove(7);
-        Tracker insertTracker = tree.insert(7);
-        Tracker nodeCountTracker = tree.getNodeCount();
-        Tracker getMinTracker = tree.getMin();
-
-        System.out.println(deleteTracker);
-        System.out.println(insertTracker);
-        System.out.println(nodeCountTracker);
-        System.out.println(getMinTracker);
-
-
-
-    }
-
 
 
 }

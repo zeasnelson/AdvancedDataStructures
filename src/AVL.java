@@ -1,5 +1,3 @@
-import javax.sound.midi.Track;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class AVL<T extends Comparable<T>> extends BST<T>{
@@ -142,40 +140,5 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
 
        return node;
     }
-
-
-    public static void main(String[] args) {
-
-
-        Random rand = new Random();
-
-        int [] nums = new int[10000];
-        for( int i = 0; i < nums.length; i++){
-            nums[i] = rand.nextInt(10000);
-        }
-        System.out.println("done with arr");
-
-        AVL<Integer> tree = new AVL<>();
-
-        for( Integer i : nums ){
-            tree.insert(i);
-        }
-
-
-        Tracker deleteTracker = tree.remove(7);
-        Tracker insertTracker = tree.insert(7);
-        Tracker nodeCountTracker = tree.getNodeCount();
-        Tracker getMinTracker = tree.getMin();
-
-        System.out.println(deleteTracker);
-        System.out.println(insertTracker);
-        System.out.println(nodeCountTracker);
-        System.out.println(getMinTracker);
-        System.out.println(tree.getHeight());
-    }
-
-
-
-
 
 }
