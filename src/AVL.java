@@ -146,32 +146,30 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
 
     public static void main(String[] args) {
 
+        BST<Integer> tree = new BST<>();
 
         Random rand = new Random();
-
-        int [] nums = new int[10000];
+        int [] nums = new int[1000000];
         for( int i = 0; i < nums.length; i++){
-            nums[i] = rand.nextInt(10000);
+            nums[i] = rand.nextInt(1000000);
         }
-        System.out.println("done with arr");
-
-        AVL<Integer> tree = new AVL<>();
 
         for( Integer i : nums ){
             tree.insert(i);
         }
 
+        Tracker insertTracker = tree.insert(6);
 
-        Tracker deleteTracker = tree.remove(7);
-        Tracker insertTracker = tree.insert(7);
+        Tracker deleteTracker = tree.remove(6);
         Tracker nodeCountTracker = tree.getNodeCount();
+        Tracker uniqueNodes = tree.uniqueNodeCount();
         Tracker getMinTracker = tree.getMin();
 
-        System.out.println(deleteTracker);
         System.out.println(insertTracker);
+        System.out.println(deleteTracker);
         System.out.println(nodeCountTracker);
+        System.out.println(uniqueNodes);
         System.out.println(getMinTracker);
-        System.out.println(tree.getHeight());
     }
 
 

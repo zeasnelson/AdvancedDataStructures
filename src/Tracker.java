@@ -177,18 +177,18 @@ public class Tracker {
         this.algorithmName = algorithmName;
     }
 
-
     @Override
     public String toString(){
-        return "Operation Name:               " + operationName +
-                "\nParameter/s:               " + (parameters == "" ? "none"    : this.parameters) +
-                "\nOutput:                    " + (funcOutput == "" ? "none"    : this.funcOutput) +
-                "\nNumber of nodes traversed: " + (nodesTraversed == 0 ? "none" : this.nodesTraversed) +
-                "\nSwaps/Data moved:          " + (dataMovement == 0 ? "none"   : this.dataMovement) +
-                "\nNumber of comparisons:     " + (comparisons == 0 ? "node"    : this.comparisons) +
-                "\nMilli start time:          " + startTime +
-                "\nMilli end time:            " + endTime +
-                "\nTotal time:                " + getTotalTimeMilli() + "\n\n";
+        return "Operation Name:            " + this.operationName +
+                (this.parameters.equals("") ? ""  : "\nParameter/s:               " + this.parameters)     +
+                (this.funcOutput.equals("") ? ""  : "\nOutput:                    " + this.funcOutput)     +
+                (this.nodesTraversed == 0   ? ""  : "\nNumber of nodes traversed: " + this.nodesTraversed) +
+                (this.dataMovement == 0     ? ""  : "\nSwaps/Data moved:          " + this.dataMovement)   +
+                (this.comparisons == 0      ? ""  : "\nNumber of comparisons:     " +this.comparisons)     +
+
+                "\nStart time:                " + this.startTime + " milliseconds " +
+                "\nEnd time:                  " + this.endTime +  " milliseconds " +
+                "\nTotal time:                " + getTotalTimeMilli() + "  milliseconds\n";
     }
 
 }
