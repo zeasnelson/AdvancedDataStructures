@@ -37,10 +37,11 @@ public class Test {
         //set how large the test data will be
         //I wouldn't exceed 1000
         int n = 10000;
+
+        System.out.println("Generating data");
         int [] notUniqueNum = randomNumbers(n);
         int [] uniqueNum = uniqueRandonNumbers(n);
 
-        System.out.println("Generating data");
         AVL<Integer> avlUniqueNum = new AVL<>();
         AVL<Integer> avlRandomNum = new AVL<>();
         BST<Integer> bstUniqueNum = new BST<>();
@@ -63,7 +64,7 @@ public class Test {
         //stat time, end time, etc... are tracked
 
         //Get the tracking info from the avl tree with random numbers(not unique numbers)
-        System.out.println("AVL tree with random not unique numbers");
+        System.out.println("AVL tree with random numbers");
         records.add(avlRandomNum.insert(n+1));
         records.add(avlRandomNum.remove(n+1));
         records.add(avlRandomNum.uniqueNodeCount());
@@ -81,8 +82,8 @@ public class Test {
             System.out.println(record);
         }
 
-        //Get the tracking info from the avl tree with unique random numbers(not unique numbers)
-        System.out.println("\n\nAVL tree with random unique numbers");
+        //Get the tracking info from the AVL tree with unique random numbers
+        System.out.println("\n\nAVL tree with unique random numbers");
         records = new ArrayList<>();//clear the previous records
         records.add(avlUniqueNum.insert(n+1));
         records.add(avlUniqueNum.remove(n+1));
@@ -101,8 +102,8 @@ public class Test {
             System.out.println(record);
         }
 
-        //Get the tracking info from the avl tree with unique random numbers(not unique numbers)
-        System.out.println("\n\nBST tree with random not unique numbers");
+        //Get the tracking info from the BST with unique random numbers(not unique numbers)
+        System.out.println("\n\nBST with random numbers");
         records = new ArrayList<>();//clear the previous records
         records.add(bstRandom.insert(n+1));
         records.add(bstRandom.remove(n+1));
@@ -121,8 +122,8 @@ public class Test {
             System.out.println(record);
         }
 
-        //Get the tracking info from the avl tree with unique random numbers(not unique numbers)
-        System.out.println("\n\nBST tree with random unique numbers");
+        //Get the tracking info from the BST with unique random numbers
+        System.out.println("\n\nBST with unique random numbers");
         records = new ArrayList<>();//clear the previous records
         records.add(bstUniqueNum.insert(n+1));
         records.add(bstUniqueNum.remove(n+1));
