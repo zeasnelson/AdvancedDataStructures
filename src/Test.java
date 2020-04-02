@@ -88,13 +88,8 @@ public class Test {
         System.out.println("AVL tree with random numbers");
         records.add(avlRandomNum.insert(n+1));
         records.add(avlRandomNum.remove(n+1));
-        records.add(avlRandomNum.uniqueNodeCount());
-        records.add(avlRandomNum.getNodeCount());
         records.add(avlRandomNum.contains(n));
         records.add(avlRandomNum.get(n));
-        records.add(avlRandomNum.getHeight());
-        records.add(avlRandomNum.getMin());
-        records.add(avlRandomNum.getMax());
         records.add(avlRandomNum.inOrder());
         records.add(avlRandomNum.preOrder());
         records.add(avlRandomNum.postOrder());
@@ -108,13 +103,8 @@ public class Test {
         records = new ArrayList<>();//clear the previous records
         records.add(avlUniqueNum.insert(n+1));
         records.add(avlUniqueNum.remove(n+1));
-        records.add(avlUniqueNum.uniqueNodeCount());
-        records.add(avlUniqueNum.getNodeCount());
         records.add(avlUniqueNum.contains(n));
         records.add(avlUniqueNum.get(n));
-        records.add(avlUniqueNum.getHeight());
-        records.add(avlUniqueNum.getMin());
-        records.add(avlUniqueNum.getMax());
         records.add(avlUniqueNum.inOrder());
         records.add(avlUniqueNum.preOrder());
         records.add(avlUniqueNum.postOrder());
@@ -128,13 +118,8 @@ public class Test {
         records = new ArrayList<>();//clear the previous records
         records.add(bstRandom.insert(n+1));
         records.add(bstRandom.remove(n+1));
-        records.add(bstRandom.uniqueNodeCount());
-        records.add(bstRandom.getNodeCount());
         records.add(bstRandom.contains(n));
         records.add(bstRandom.get(n));
-        records.add(bstRandom.getHeight());
-        records.add(bstRandom.getMin());
-        records.add(bstRandom.getMax());
         records.add(bstRandom.inOrder());
         records.add(bstRandom.preOrder());
         records.add(bstRandom.postOrder());
@@ -148,13 +133,8 @@ public class Test {
         records = new ArrayList<>();//clear the previous records
         records.add(bstUniqueNum.insert(n+1));
         records.add(bstUniqueNum.remove(n+1));
-        records.add(bstUniqueNum.uniqueNodeCount());
-        records.add(bstUniqueNum.getNodeCount());
         records.add(bstUniqueNum.contains(n));
         records.add(bstUniqueNum.get(n));
-        records.add(bstUniqueNum.getHeight());
-        records.add(bstUniqueNum.getMin());
-        records.add(bstUniqueNum.getMax());
         records.add(bstUniqueNum.inOrder());
         records.add(bstUniqueNum.preOrder());
         records.add(bstUniqueNum.postOrder());
