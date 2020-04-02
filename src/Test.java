@@ -1,3 +1,5 @@
+import java.io.File;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -44,6 +46,15 @@ public class Test {
 
     public static void main(String[] args) {
 
+
+        FileIO.setIo("coronavirus.txt");
+        int c = FileIO.getNextChar();
+        while( c != -1 ){
+            System.out.print((char)c);
+            c = FileIO.getNextChar();
+        }
+
+        /*
         //set how large the test data will be
         //I wouldn't exceed 1000
         int n = 10000;
@@ -151,7 +162,7 @@ public class Test {
         for( Tracker record : records ){
             System.out.println(record);
         }
-
+        */
     }
 
 }
