@@ -1,0 +1,131 @@
+Human coronaviruses (HCoVs) have long been considered inconsequential pathogens, causing the “common
+cold” in otherwise healthy people. However, in the 21st century, 2 highly pathogenic HCoVs—severe acute
+respiratory syndrome coronavirus (SARS-CoV) and Middle East respiratory syndrome coronavirus
+(MERS-CoV)—emerged from animal reservoirs to cause global epidemics with alarming morbidity and mortality.
+In December 2019, yet another pathogenic HCoV, 2019 novel coronavirus (2019-nCoV), was recognized in Wuhan,
+China, and has caused serious illness and death. The ultimate scope and effect of this outbreak is unclear
+at present as the situation is rapidly evolving.
+
+Coronaviruses are large, enveloped, positive-strand RNA viruses that can be divided into 4 genera: alpha,
+beta, delta, and gamma, of which alpha and beta CoVs are known to infect humans.1 Four HCoVs (HCoV 229E,
+ NL63, OC43, and HKU1) are endemic globally and account for 10% to 30% of upper respiratory tract
+ infections in adults. Coronaviruses are ecologically diverse with the greatest variety seen in bats,
+ suggesting that they are the reservoirs for many of these viruses.2 Peridomestic mammals may serve as
+ intermediate hosts, facilitating recombination and mutation events with expansion of genetic diversity.
+ The surface spike (S) glycoprotein is critical for binding of host cell receptors and is believed to
+ represent a key determinant of host range restriction.1
+
+Until recently, HCoVs received relatively little attention due to their mild phenotypes in humans.
+This changed in 2002, when cases of severe atypical pneumonia were described in Guangdong Province,
+China, causing worldwide concern as disease spread via international travel to more than 2 dozen
+countries.2 The new disease became known as severe acute respiratory syndrome (SARS), and a beta-HCoV,
+named SARS-CoV, was identified as the causative agent. Because early cases shared a history of
+human-animal contact at live game markets, zoonotic transmission of the virus was strongly suspected.
+3 Palm civets and raccoon dogs were initially thought to be the animal reservoir(s); however, as more
+ viral sequence data became available, consensus emerged that bats were the natural hosts.
+
+Common symptoms of SARS included fever, cough, dyspnea, and occasionally watery diarrhea.2 Of infected
+patients, 20% to 30% required mechanical ventilation and 10% died, with higher fatality rates in older
+patients and those with medical comorbidities. Human-to-human transmission was documented, mostly in
+ health care settings. This nosocomial spread may be explained by basic virology: the predominant human
+ receptor for the SARS S glycoprotein, human angiotensin-converting enzyme 2 (ACE2), is found primarily
+ in the lower respiratory tract, rather than in the upper airway. Receptor distribution may account for
+ both the dearth of upper respiratory tract symptoms and the finding that peak viral shedding occurred
+ late (≈10 days) in illness when individuals were already hospitalized. SARS care often necessitated
+ aerosol-generating procedures such as intubation, which also may have contributed to the prominent nosocomial spread.
+
+Several important transmission events did occur in the community, such as the well-characterized
+mini-outbreak in the Hotel Metropole in Hong Kong from where infected patrons traveled and spread
+SARS internationally. Another outbreak occurred at the Amoy Gardens housing complex where more
+than 300 residents were infected, providing evidence that airborne transmission of SARS-CoV can
+sometimes occur.4 Nearly 20 years later, the factors associated with transmission of SARS-CoV,
+ranging from self-limited animal-to-human transmission to human superspreader events, remain poorly understood.
+
+Ultimately, classic public health measures brought the SARS pandemic to an end, but not before
+8098 individuals were infected and 774 died.2 The pandemic cost the global economy an estimated
+$30 billion to $100 billion.1 SARS-CoV demonstrated that animal CoVs could jump the species
+barrier, thereby expanding perception of pandemic threats.
+
+In 2012, another highly pathogenic beta-CoV made the species jump when Middle East respiratory
+syndrome (MERS) was recognized and MERS-CoV was identified in the sputum of a Saudi man who died
+from respiratory failure.3 Unlike SARS-CoV, which rapidly spread across the globe and was contained
+and eliminated in relatively short order, MERS has smoldered, characterized by sporadic zoonotic
+transmission and limited chains of human spread. MERS-CoV has not yet sustained community spread;
+instead, it has caused explosive nosocomial transmission events, in some cases linked to a single
+superspreader, which are devastating for health care systems. According to the World Health Organization (WHO),
+as of November 2019, MERS-CoV has caused a total of 2494 cases and 858 deaths, the majority in Saudi Arabia.
+The natural reservoir of MERS-CoV is presumed to be bats, yet human transmission events have
+primarily been attributed to an intermediate host, the dromedary camel.
+
+MERS shares many clinical features with SARS such as severe atypical pneumonia, yet key differences are evident.
+Patients with MERS have prominent gastrointestinal symptoms and often acute kidney failure, likely explained by
+the binding of the MERS-CoV S glycoprotein to dipeptidyl peptidase 4 (DPP4), which is present in the lower
+airway as well as the gastrointestinal tract and kidney.3 MERS necessitates mechanical ventilation in 50% to 89%
+ of patients and has a case fatality rate of 36%.2
+
+While MERS has not caused the international panic seen with SARS, the emergence of this second,
+ highly pathogenic zoonotic HCoV illustrates the threat posed by this viral family. In 2017,
+ the WHO placed SARS-CoV and MERS-CoV on its Priority Pathogen list, hoping to galvanize research
+ and the development of countermeasures against CoVs.
+
+The action of the WHO proved prescient. On December 31, 2019, Chinese authorities reported a
+cluster of pneumonia cases in Wuhan, China, most of which included patients who reported exposure
+to a large seafood market selling many species of live animals. Emergence of another pathogenic
+ zoonotic HCoV was suspected, and by January 10, 2020, researchers from the Shanghai Public
+ Health Clinical Center & School of Public Health and their collaborators released a full genomic
+ sequence of 2019-nCoV to public databases, exemplifying prompt data sharing in outbreak response.
+ Preliminary analyses indicate that 2019-nCoV has some amino acid homology to SARS-CoV and may be
+ able to use ACE2 as a receptor. This has important implications for predicting pandemic potential
+  moving forward. The situation with 2019-nCoV is evolving rapidly, with the case count currently
+   growing into the hundreds. Human-to-human transmission of 2019-nCoV occurs, as evidenced by the
+   infection of 15 health care practitioners in a Wuhan hospital. The extent, if any, to which such
+   transmission might lead to a sustained epidemic remains an open and critical question. So far, it
+   appears that the fatality rate of 2019-nCoV is lower than that of SARS-CoV and MERS-CoV; however,
+   the ultimate scope and effects of the outbreak remain to be seen.
+
+Drawing on experience from prior zoonotic CoV outbreaks, public health authorities have initiated
+ preparedness and response activities. Wuhan leaders closed and disinfected the first identified market.
+ The United States and several other countries have initiated entry screening of passengers from Wuhan
+  at major ports of entry. Health practitioners in other Chinese cities, Thailand, Japan, and South Korea
+  promptly identified travel-related cases, isolating individuals for further care. The first travel-related
+  case in the United States occurred on January 21 in a young Chinese man who had visited Wuhan.
+
+Additionally, biomedical researchers are initiating countermeasure development for 2019-nCoV using
+SARS-CoV and MERS-CoV as prototypes. For example, platform diagnostic modalities are being rapidly
+adapted to include 2019-nCoV, allowing early recognition and isolation of cases. Broad-spectrum antivirals,
+such as remdesivir, an RNA polymerase inhibitor, as well as lopinavir/ritonavir and interferon beta have
+shown promise against MERS-CoV in animal models and are being assessed for activity against 2019-nCoV.5 Vaccines,
+which have adapted approaches used for SARS-CoV or MERS-CoV, are also being pursued. For example, scientists at
+the National Institute of Allergy and Infectious Diseases Vaccine Research Center have used nucleic acid vaccine
+platform approaches.6 During SARS, researchers moved from obtaining the genomic sequence of SARS-CoV to a phase 1
+clinical trial of a DNA vaccine in 20 months and have since compressed that timeline to 3.25 months for other viral
+diseases. For 2019-nCoV, they hope to move even faster, using messenger RNA (mRNA) vaccine technology.
+Other researchers are similarly poised to construct viral vectors and subunit vaccines.
+
+While the trajectory of this outbreak is impossible to predict, effective response requires prompt action
+from the standpoint of classic public health strategies to the timely development and implementation of
+effective countermeasures. The emergence of yet another outbreak of human disease caused by a pathogen from
+a viral family formerly thought to be relatively benign underscores the perpetual challenge of
+emerging infectious diseases and the importance of sustained preparedness.
+
+Corresponding Author: Anthony S. Fauci, MD, Laboratory of Immunoregulation, National Institute of Allergy and Infectious Diseases, 31 Center Dr, MSC 2520, Bldg 31, Room 7A-03, Bethesda, MD 20892-2520 (afauci@niaid.nih.gov).
+
+Published Online: January 23, 2020. doi:10.1001/jama.2020.0757
+
+Conflict of Interest Disclosures: None reported.
+
+References
+1.
+de Wilde  AH, Snijder  EJ, Kikkert  M, van Hemert  MJ.  Host factors in coronavirus replication.  Curr Top Microbiol Immunol. 2018;419:1-42. doi:10.1007/82_2017_25PubMedGoogle Scholar
+2.
+de Wit  E, van Doremalen  N, Falzarano  D, Munster  VJ.  SARS and MERS: recent insights into emerging coronaviruses.  Nat Rev Microbiol. 2016;14(8):523-534. doi:10.1038/nrmicro.2016.81PubMedGoogle ScholarCrossref
+3.
+Song  Z, Xu  Y, Bao  L,  et al.  From SARS to MERS, thrusting coronaviruses into the spotlight.  Viruses. 2019;11(1):11. doi:10.3390/v11010059PubMedGoogle ScholarCrossref
+4.
+Yu  IT, Li  Y, Wong  TW,  et al.  Evidence of airborne transmission of the severe acute respiratory syndrome virus.  N Engl J Med. 2004;350(17):1731-1739. doi:10.1056/NEJMoa032867PubMedGoogle ScholarCrossref
+5.
+Sheahan  TP, Sims  AC, Leist  SR,  et al.  Comparative therapeutic efficacy of remdesivir and combination lopinavir, ritonavir, and interferon beta against MERS-CoV.  Nat Commun. 2020;11(1):222. doi:10.1038/s41467-019-13940-6PubMedGoogle ScholarCrossref
+6.
+Graham  BS, Mascola  JR, Fauci  AS.  Novel vaccine technologies: essential components of an adequate response to emerging viral diseases.  JAMA. 2018;319(14):1431-1432. doi:10.1001/jama.2018.0345
+ArticlePubMedGoogle ScholarCrossref
+Comme
