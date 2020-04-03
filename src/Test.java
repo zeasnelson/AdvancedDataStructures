@@ -42,7 +42,7 @@ public class Test {
         System.out.println(textAVL.contains('8'));
         System.out.println(textAVL.get('@'));
         System.out.println(textAVL.getHeight());
-//
+
 //        //Get the tracking info from the BST tree
         System.out.println("\n\n ---- BST with data from text file ---- ");
         System.out.println(textBST.insert('8'));

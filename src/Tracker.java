@@ -47,7 +47,7 @@ public class Tracker {
 
 
     public Tracker(String operationName) {
-        Long zero = Long.valueOf(0);
+        Long zero = Long.valueOf(-1);
         this.dataMovement = zero;
         this.comparisons = zero;
         this.nodesTraversed = zero;
@@ -182,9 +182,9 @@ public class Tracker {
         return "Operation Name:            " + this.operationName +
                 (this.parameters.equals("") ? ""  : "\nParameter/s value/s:       " + this.parameters)     +
                 (this.funcOutput.equals("") ? ""  : "\nOutput:                    " + this.funcOutput)     +
-                (this.nodesTraversed == 0   ? ""  : "\nNumber of nodes traversed: " + this.nodesTraversed) +
-                (this.dataMovement == 0     ? ""  : "\nSwaps/Data moved:          " + this.dataMovement)   +
-                (this.comparisons == 0      ? ""  : "\nNumber of comparisons:     " +this.comparisons)     +
+                (this.nodesTraversed < 0   ? ""  : "\nNumber of nodes traversed: " + this.nodesTraversed) +
+                (this.dataMovement < 0     ? ""  : "\nSwaps/Data moved:          " + this.dataMovement)   +
+                (this.comparisons < 0      ? ""  : "\nNumber of comparisons:     " +this.comparisons)     +
 
                 "\nStart time:                " + this.startTime + " milliseconds " +
                 "\nEnd time:                  " + this.endTime +  " milliseconds " +
