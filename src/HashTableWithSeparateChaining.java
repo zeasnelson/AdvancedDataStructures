@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 	
 	
-	private class Entry<K, V> {
+	public class Entry<K, V> {
 		
 		  int hash; //hash
 		  K key;	//keys
@@ -421,21 +421,30 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 	public static void main(String [] alex) {
 		
 		HashTableWithSeparateChaining<Integer,Character> map = new HashTableWithSeparateChaining();
-		
-		System.out.println(map.insert(5, 'a'));
-		System.out.println(map.insert(6, 'b'));
-		
-		System.out.println(map.insert(7, 'a'));
-		System.out.println(map.insert(8, 'b'));
-		System.out.println(map.insert(9, 'a'));
-		System.out.println(map.insert(0, 'b'));
-		System.out.println(map.insert(5, 'a'));
-		System.out.println(map.insert(6, 'b'));
-		System.out.println(map.get(5));
-		
-		//Random Numbers 
-		
-		
-		
+
+
+		//Random Numbers and sequential values
+
+		//n = 10
+		for(int i = 0; i< 10; i++ ) {
+
+		}
+		//n = 100
+		for(int i = 0; i< 10; i++ ) {
+
+		}
+		//n = 1,000
+		for(int i = 0; i< 10; i++ ) {
+
+		}
+		//n = 10,000
+		for(int i = 0; i< 10; i++ ) {
+
+		}
+
+		//Reading from a file
+
+
+
 	}//end main
 }// end class
