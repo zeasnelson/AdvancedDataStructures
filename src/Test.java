@@ -1,6 +1,4 @@
 
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Test {
 
@@ -15,6 +13,15 @@ public class Test {
         AVL<Character> textAVL = new AVL<>();
         BST<Character> textBST = new BST<>();
 
+        //set how large the test data will be
+        //Don't exceed 1000
+        int n = 1000;
+        System.out.println("Filling up trees");
+        for( int i = 0; i < n; i++ ){
+            AVLTree.insert(i);
+            binarySearchTree.insert(i);
+        }
+
         //Read text file
         FileIO.setIo("coronavirus.txt");
         int c = FileIO.getNextChar();
@@ -25,57 +32,42 @@ public class Test {
         }
 
 
-        //set how large the test data will be
-        //Don't exceed 1000
-        int n = 1000;
-
-
-//        System.out.println("Filling up trees");
-//        for( int i = 0; i < n; i++ ){
-//            AVLTree.insert(i);
-//            binarySearchTree.insert(i);
-//        }
-
         //Every function was implemented such that comparisons, data movement, nodes traversed,
         //start time, end time, etc... are tracked
 
         //Get the tracking info from the avl tree
-        System.out.println(" ---- AVL with data from text file ---- ");
-        System.out.println(textAVL.insert('}'));
-//        System.out.println(textAVL.remove('z'));
-//        System.out.println(textAVL.contains('a'));
-//        System.out.println(textAVL.get('x'));
+        System.out.println("\n\n\n ---- AVL with data from text file ---- ");
+        System.out.println(textAVL.insert('8'));
+        System.out.println(textAVL.remove('7'));
+        System.out.println(textAVL.contains('8'));
+        System.out.println(textAVL.get('@'));
         System.out.println(textAVL.getHeight());
-
-        //Get the tracking info from the BST tree
-        System.out.println(" ---- BST with data from text file ---- ");
-        System.out.println(textBST.insert('}'));
-//        System.out.println(textBST.remove('z'));
-//        System.out.println(textBST.contains('a'));
-//        System.out.println(textBST.get('x'));
+//
+//        //Get the tracking info from the BST tree
+        System.out.println("\n\n ---- BST with data from text file ---- ");
+        System.out.println(textBST.insert('8'));
+        System.out.println(textBST.remove('7'));
+        System.out.println(textBST.contains('8'));
+        System.out.println(textBST.get('@'));
         System.out.println(textBST.getHeight());
 
 
-
-
-
         //Get the tracking info from the avl tree
-//        System.out.println(" ---- AVL ---- ");
-//        System.out.println(AVLTree.insert(n));
-//        System.out.println(AVLTree.remove(n));
-//        System.out.println(AVLTree.contains(n-1));
-//        System.out.println(AVLTree.get(n-1));
-//        System.out.println(AVLTree.getHeight());
-//
-//
-//
-//        //Get the tracking info from the BST
-//        System.out.println("\n\n---- BST ---- ");
-//        System.out.println(binarySearchTree.insert(n));
-//        System.out.println(binarySearchTree.remove(n));
-//        System.out.println(binarySearchTree.contains(n-1));
-//        System.out.println(binarySearchTree.get(n-1));
-//        System.out.println(binarySearchTree.getHeight());
+        System.out.println("\n\n ---- AVL with increasing numbers 0,1,2,...,n---- ");
+        System.out.println(AVLTree.insert(n));
+        System.out.println(AVLTree.remove(n));
+        System.out.println(AVLTree.contains(n-1));
+        System.out.println(AVLTree.get(n-1));
+        System.out.println(AVLTree.getHeight());
+
+
+        //Get the tracking info from the BST
+        System.out.println("\n\n---- BST with increasing numbers 0,1,2,...,n---- ");
+        System.out.println(binarySearchTree.insert(n));
+        System.out.println(binarySearchTree.remove(n));
+        System.out.println(binarySearchTree.contains(n-1));
+        System.out.println(binarySearchTree.get(n-1));
+        System.out.println(binarySearchTree.getHeight());
 
 
 
