@@ -8,9 +8,7 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
      * @param node the node to be rotated
      * @return the new parent node
      */
-    private Node<T> leftRotate(Node<T> node, Tracker tracker){
-        //each rotation will count as one data movement
-        tracker.incDataMovement();
+    private Node<T> leftRotate(Node<T> node){
 
         Node<T> rightNode = node.right;
         Node<T> leftNode  = rightNode.left;
@@ -26,10 +24,7 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
      * @param node the node to be rotated
      * @return the new parent node
      */
-    private Node<T> rightRotate(Node<T> node, Tracker tracker){
-
-        //each rotation will count as one data movement
-        tracker.incDataMovement();
+    private Node<T> rightRotate(Node<T> node){
 
         Node<T> leftNode  = node.left;
         Node<T> rightNode = leftNode.right;
@@ -45,13 +40,13 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
      * @param node The node to check the balance factor
      * @return the balance factor
      */
-    private int getBalanceFactor(Node<T> node, Tracker tracker){
+    private int getBalanceFactor(Node<T> node){
         if( node == null ){
             return 0;
         }
 
-        int leftHeight = getHeight(node.left, tracker);
-        int rightHeight = getHeight(node.right, tracker);
+        int leftHeight = getHeight(node.left);
+        int rightHeight = getHeight(node.right);
         return leftHeight - rightHeight;
     }
 
@@ -66,11 +61,16 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
         if( node == null ){
             return true;
         }
-        l = getHeight(node.left, tracker);
-        r = getHeight(node.right, tracker);
+        l = getHeight(node.left);
+        r = getHeight(node.right);
 
         return (Math.abs(l-r) <= 1 && isBalanced(node.left, tracker) && isBalanced(node.right, tracker));
 
+    }
+
+    @Override
+    public Tracker remove(T value){
+        return super.remove(value);
     }
 
 
@@ -81,61 +81,59 @@ public class AVL<T extends Comparable<T>> extends BST<T>{
         if (node == null)
             return null;
 
-        //Each iteration will count as a comparison
-        tracker.incComparisons();
-
-        int balance = getBalanceFactor(node, tracker);
+        int balance = getBalanceFactor(node);
 
         // Left Left Case
-        if (balance > 1 && getBalanceFactor(node.left, tracker) >= 0)
-            return rightRotate(node, tracker);
+        if (balance > 1 && getBalanceFactor(node.left) >= 0)
+            return rightRotate(node);
 
         // Left Right Case
-        else if (balance > 1 && getBalanceFactor(node.left, tracker) < 0){
-            node.left = leftRotate(node.left, tracker);
-            return rightRotate(node, tracker);
+        else if (balance > 1 && getBalanceFactor(node.left) < 0){
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
         }
 
         // Right Right Case
-        else if (balance < -1 && getBalanceFactor(node.right, tracker) <= 0)
-            return leftRotate(node, tracker);
+        else if (balance < -1 && getBalanceFactor(node.right) <= 0)
+            return leftRotate(node);
 
         // Right Left Case
-        else if (balance < -1 && getBalanceFactor(node.right, tracker) > 0) {
-            node.right = rightRotate(node.right, tracker);
-            return leftRotate(node, tracker);
+        else if (balance < -1 && getBalanceFactor(node.right) > 0) {
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
         }
         return node;
     }
 
+    @Override
+    public Tracker insert(T value){
+        return super.insert(value);
+    }
 
     @Override
     public Node<T> insert(Node<T> node, T value, Tracker tracker){
        node = super.insert(node, value, tracker);
 
-        //Each iteration will count as a comparison
-        tracker.incComparisons();
-
        //balance
-       int balance = getBalanceFactor(node, tracker);
+       int balance = getBalanceFactor(node);
 
         //left left rotation
         if( balance > 1 && value.compareTo(node.left.value) < 0 ){
-            return rightRotate(node, tracker);
+            return rightRotate(node);
         }
         //Right Right rotation
         if( balance < -1 && value.compareTo(node.right.value) > 0 ){
-            return leftRotate(node, tracker);
+            return leftRotate(node);
         }
         //Left Right rotation
         if( balance > 1 && value.compareTo(node.left.value) > 0 ){
-            node.left = leftRotate(node.left, tracker);
-            return rightRotate(node, tracker);
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
         }
         //Right Left rotation
         if( balance < -1 && value.compareTo(node.right.value) < 0 ){
-            node.right = rightRotate(node.right, tracker);
-            return leftRotate(node, tracker);
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
         }
 
        return node;
