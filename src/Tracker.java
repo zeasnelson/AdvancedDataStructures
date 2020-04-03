@@ -180,7 +180,7 @@ public class Tracker {
     @Override
     public String toString(){
         return "Operation Name:            " + this.operationName +
-                (this.parameters.equals("") ? ""  : "\nParameter/s:               " + this.parameters)     +
+                (this.parameters.equals("") ? ""  : "\nParameter/s value/s:       " + this.parameters)     +
                 (this.funcOutput.equals("") ? ""  : "\nOutput:                    " + this.funcOutput)     +
                 (this.nodesTraversed == 0   ? ""  : "\nNumber of nodes traversed: " + this.nodesTraversed) +
                 (this.dataMovement == 0     ? ""  : "\nSwaps/Data moved:          " + this.dataMovement)   +

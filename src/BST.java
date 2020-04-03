@@ -16,39 +16,6 @@ public class BST<T extends Comparable<T>> {
     }
 
     /**
-     * Perform a node count of only unique values but return a count of its operation instead.
-     * Tracks comparisons, data movements, number of nodes traversed etc
-     * @return A Tracker obj
-     */
-    public Tracker uniqueNodeCount(){
-        Tracker tracker = new Tracker("uniqueNodeCount");
-        tracker.setStartTime();
-        int output = uniqueNodeCount(this.root, tracker);
-        tracker.setEndTime();
-        tracker.setFuncOutput(Integer.toString(output));
-        return tracker;
-    }
-
-    /**
-     * Count all nodes that have a unique value
-     * @param root the root node
-     * @param tracker An object to keep track of comparisons, data swaps, etc
-     * @return the number of unique nodes in the tree
-     */
-    public int uniqueNodeCount(Node<T> root, Tracker tracker){
-        if( root == null ){
-            return 0;
-        }
-        else {
-            //track the number of nodes traversed
-            tracker.incNodesTraversed();
-            return 1 + uniqueNodeCount(root.left, tracker) + uniqueNodeCount(root.right, tracker);
-        }
-    }
-
-
-
-    /**
      * Perform a node count but return a count of its operation instead.
      * Tracks comparisons, data movements, number of nodes traversed etc
      * @return A Tracker obj
@@ -74,7 +41,7 @@ public class BST<T extends Comparable<T>> {
         }
         else {
             tracker.incNodesTraversed();
-            return root.valueCount + getNodeCount(root.left, tracker) + getNodeCount(root.right, tracker);
+            return 1 + getNodeCount(root.left, tracker) + getNodeCount(root.right, tracker);
         }
     }
 
@@ -102,46 +69,37 @@ public class BST<T extends Comparable<T>> {
      * @return The root of the tree
      */
     public Node<T> remove(Node<T> node, T value, Tracker tracker){
-        //track the number of comparisons
-        tracker.incComparisons();
 
         if( node == null ){
             return null;
         }
         else if( value.compareTo(node.value) < 0 ){
+            //track the number of comparisons
+            tracker.incComparisons();
             node.left = remove(node.left, value, tracker);
-            tracker.incNodesTraversed();
         }
         else if( value.compareTo(node.value) > 0){
+            //track the number of comparisons
+            tracker.incComparisons();
             node.right = remove(node.right, value, tracker);
-            tracker.incNodesTraversed();
         }
         else{
-            //duplicates
-            if( node.valueCount > 1 ){
-                node.valueCount--;
-            }
+            //track the number of comparisons
+            tracker.incComparisons();
+
             // node with only one child or no child
-            else if (node.right == null || node.left == null){
+            if (node.left == null)
+                return node.right;
+            else if (node.right == null)
+                return node.left;
 
-                Node<T> temp = node.left;
-                if (temp == null)
-                    temp = node.right;
+            // node with two children: Get the inorder successor (smallest
+            // in the right subtree
+            node.value = getMin(root.right, tracker).value;
 
-                // No child case
-                if (temp == null){
-                    node = null;
-                }else // One child case
-                    node = temp;
-            }
-            else {
-                Node<T> temp = getMin(node.right, tracker);
-                node.value = temp.value;
-                node.right = remove(node.right, temp.value, tracker);
-            }
+            // Delete the inorder successor
+            root.right = remove(node.right, node.value, tracker);
 
-            //track the number of data swaps/movements
-            tracker.incDataMovement();
         }
         return node;
     }
@@ -171,23 +129,21 @@ public class BST<T extends Comparable<T>> {
      * @return the root node of the tree
      */
     public Node<T> insert(Node<T> node, T value, Tracker tracker){
-        //Track number of comparisons, there should be one at each level
-        tracker.incComparisons();
 
         if( node == null ){
+            //Track number of comparisons, there should be one at each level
+            tracker.incComparisons();
             node = new Node<>(value);
-            node.valueCount++;
         }
-        else if( value.compareTo(node.value) == 0 ){
-            node.valueCount++;
-        }
-        else if( value.compareTo(node.value) < 0 ){
+        if( value.compareTo(node.value) < 0 ){
+            //Track number of comparisons, there should be one at each level
+            tracker.incComparisons();
             node.left =  insert(node.left, value, tracker);
-            tracker.incNodesTraversed();
         }
         else if( value.compareTo(node.value) > 0 ){
+            //Track number of comparisons, there should be one at each level
+            tracker.incComparisons();
             node.right = insert(node.right, value, tracker);
-            tracker.incNodesTraversed();
         }
         return node;
     }
@@ -231,18 +187,20 @@ public class BST<T extends Comparable<T>> {
 
         Node<T> current = root;
         while( current != null ){
-            //Track number of comparisons, there should be one at each level
-            tracker.incComparisons();
 
             if( value.compareTo(current.value) == 0 ){
+                //Track number of comparisons, there should be one at each level
+                tracker.incComparisons();
                 return true;
             }
             else if( value.compareTo(current.value) < 0 ){
-                tracker.incNodesTraversed();
+                //Track number of comparisons, there should be one at each level
+                tracker.incComparisons();
                 current = current.left;
             }
             else if( value.compareTo(current.value) > 0 ){
-                tracker.incNodesTraversed();
+                //Track number of comparisons, there should be one at each level
+                tracker.incComparisons();
                 current = current.right;
             }
         }
@@ -316,7 +274,7 @@ public class BST<T extends Comparable<T>> {
     public Tracker getHeight(){
         Tracker tracker = new Tracker("getHeight");
         tracker.setStartTime();
-        int output = getHeight(this.root, tracker);
+        int output = getHeight(this.root);
         tracker.setEndTime();
         tracker.setFuncOutput(Integer.toString(output));
         return tracker;
@@ -324,18 +282,16 @@ public class BST<T extends Comparable<T>> {
 
     /**
      * Get the tree height
-     * @param tracker An object to keep track of comparisons, data swaps, etc
      * @param node root node of the tree
      * @return the height of the tree
      */
-    public int getHeight(Node<T> node, Tracker tracker){
+    public int getHeight(Node<T> node){
         if( node == null ){
             return 0;
         }
         //No comparisons, track number of nodes were visited
-        tracker.incNodesTraversed();
-        int lh = getHeight(node.left, tracker);
-        int rh = getHeight(node.right, tracker);
+        int lh = getHeight(node.left);
+        int rh = getHeight(node.right);
 
 
 
@@ -430,7 +386,7 @@ public class BST<T extends Comparable<T>> {
             tracker.incNodesTraversed();
 
             inOrder(node.left, tracker);
-           // System.out.print(node.value + " ");
+            System.out.print(node.value + " ");
             inOrder(node.right, tracker);
         }
         return tracker;
@@ -462,7 +418,7 @@ public class BST<T extends Comparable<T>> {
             //count number of nodes traversed
             tracker.incNodesTraversed();
 
-            //System.out.print(node.value + " ");
+            System.out.print(node.value + " ");
             preOrder(node.left, tracker);
             preOrder(node.right, tracker);
         }
