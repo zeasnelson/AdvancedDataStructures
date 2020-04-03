@@ -4,34 +4,34 @@ import java.util.Map.Entry;
 
 public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 	
-
-public class Entry<K, V> {
 	
-	  int hash; //hash
-	  K key;	//keys
-	  V value;  //values
-
-	  public Entry(K key, V value) {
-	    this.key = key;
-	    this.value = value;
-	    this.hash = key.hashCode();
-	  }
-
-	  // We are not overriding the Object equals method
-	  // No casting is required with this method.
-	  
-	  //equals method not being overidden 
-	  public boolean equals(Entry<K, V> other) {
-	    if (hash != other.hash) return false;
-	    return key.equals(other.key);
-	  }
-	  
-	  //print out the the link of key 
-	  @Override
-	  public String toString() {
-	    return key + " => " + value;
-	  }
-}
+	private class Entry<K, V> {
+		
+		  int hash; //hash
+		  K key;	//keys
+		  V value;  //values
+	
+		  public Entry(K key, V value) {
+		    this.key = key;
+		    this.value = value;
+		    this.hash = key.hashCode();
+		  }
+	
+		  // We are not overriding the Object equals method
+		  // No casting is required with this method.
+		  
+		  //equals method not being overidden 
+		  public boolean equals(Entry<K, V> other) {
+		    if (hash != other.hash) return false;
+		    return key.equals(other.key);
+		  }
+		  
+		  //print out the the link of key 
+		  @Override
+		  public String toString() {
+		    return key + " => " + value;
+		  }
+	}
 
 	private static final int DefaultCapacity = 1;
 	private static final double DefaultLoadFactor = 0.75;
@@ -186,34 +186,142 @@ public class Entry<K, V> {
 		return bucketSeekEntry(bucketIndex, key) != null;
 	}// end haskey
 
-	// The next 3 function can all insert, and put values in the hash table
-	public V put(K key, V value) {
-		return insert(key, value);
-	}// end insert
-
-	public V add(K key, V value) {
-		return insert(key, value);
-	}// end add method
-
-	public V insert(K key, V value) {
+	public Tracker insert(K key, V value) {
+		
 		if (key == null)
-			throw new IllegalArgumentException("Keys cannot be null."); // if the key is null return error message
+			return null;
+		
+		Tracker tracker = new Tracker("insert");
+		tracker.setStartTime();
+		
 		Entry<K, V> NEntry = new Entry<>(key, value); // otherwise create a new entry with the key and value
+		
 		int bucketIndex = normalizeIndex(NEntry.hash);// normalize the index with a hash
-		return bucketInsertEntry(bucketIndex, NEntry);// return to the bucket
+		V output =  bucketInsertEntry(bucketIndex, NEntry, tracker);// return to the bucket
+		tracker.setEndTime();
+		
+		if(output!= null) {
+			tracker.setFuncOutput(output.toString());
+		}
+		return tracker;
+		
 	}// end insert
+	
+	
+	private V bucketInsertEntry(int bucketIndex, Entry<K, V> entry, Tracker tracker) {
+
+		LinkedList<Entry<K, V>> bucket = table[bucketIndex];
+		
+		if (bucket == null) // If the buckets are empty a new list
+			table[bucketIndex] = bucket = new LinkedList<>();
+
+		Entry<K, V> existentEntry = bucketSeekEntry(bucketIndex, entry.key);
+		
+		
+		if (existentEntry == null) {
+			bucket.add(entry);
+			if (++size > threshold)
+				resizeTable();// if the table needs to be resied call the reizeTable function
+			
+			int index = bucket.indexOf(existentEntry);
+				index++;
+			tracker.setComparisons((long)index);
+			return null;	
+		} else {
+			V oldVal = existentEntry.value;
+			existentEntry.value = entry.value;
+			
+			//keep track of index
+			int index = bucket.indexOf(existentEntry);
+			index++;
+			tracker.setComparisons((long)index);
+			
+			
+			return oldVal;
+		}
+	}// end bucket insert entry
+	
 
 	// keys must exist otherwise returns null
-	public V get(K key) {
-
+	public Tracker get(K key) {
+		
+		//create tracker object
+		Tracker tracker = new Tracker("Search");
+		
+		tracker.setParameters(key.toString());// save key param
+		//start the time 
+		tracker.setStartTime();
+		
 		if (key == null)
 			return null; // if the key is null return null to the user
+		
 		int bucketIndex = normalizeIndex(key.hashCode()); // otherwise check the bucket
-		Entry<K, V> entry = bucketSeekEntry(bucketIndex, key);
-		if (entry != null)
-			return entry.value;// if the value is not equal to null return that values
+		
+		
+		//Entry<K, V> entry = bucketSeekEntry(bucketIndex, key, tracker);
+		
+		 V output = bucketSeekEntry(bucketIndex, key, tracker);
+		
+		 tracker.setEndTime();
+		 tracker.setFuncOutput(output.toString());
+		if (output != null)
+			return tracker;// if the value is not equal to null return that values
 		return null;// otherwise return null as in the value wasent found
 	}// end get
+	
+	// Finds and returns a particular entry in a given bucket if it exists
+		private Entry<K, V> bucketSeekEntry(int bucketIndex, K key) {
+
+			if (key == null)
+				return null;
+			LinkedList<Entry<K, V>> bucket = table[bucketIndex];
+			if (bucket == null)
+				return null;
+			for (Entry<K, V> entry : bucket)
+				if (entry.key.equals(key))
+					return entry;
+			return null;
+		}// end bucketseek entry
+		
+		// Finds and returns a particular entry in a given bucket if it exists
+		private  V bucketSeekEntry(int bucketIndex, K key, Tracker tracker) {
+
+			if (key == null)
+				return null;
+			
+			
+			LinkedList<Entry<K, V>> bucket = table[bucketIndex];
+			
+			int index;
+
+			//index++;
+			
+			//tracker.setComparisons((long) index);
+				
+			if (bucket == null)
+				return null;
+			
+			 V returnEntry = null;
+			
+			 index = bucket.indexOf(key);
+				index++;
+				
+				System.out.println(index);
+				
+				tracker.setComparisons((long) index);
+				
+			for (Entry<K, V> entry : bucket) {
+				
+				  if (entry.key.equals(key)) {
+					  returnEntry = entry.value;
+				   }else {
+					   returnEntry = null;
+					}//end else 
+			}
+			return returnEntry;
+		}// end bucketseek entry
+	
+	
 
 	// Removes a key from the map and returns the value.
 	public Tracker remove(K key) {
@@ -227,6 +335,8 @@ public class Entry<K, V> {
 			return null;
 
 		int bucketIndex = normalizeIndex(key.hashCode());
+		
+		
 		V output = bucketRemoveEntry(bucketIndex, key, tracker); // save ouput
 		tracker.setEndTime();
 		tracker.setFuncOutput(output.toString());
@@ -262,39 +372,7 @@ public class Entry<K, V> {
 	}// end bucket remove entry
 
 	// bucket inserts, find a place for an element within the bucket
-	private V bucketInsertEntry(int bucketIndex, Entry<K, V> entry) {
-
-		LinkedList<Entry<K, V>> bucket = table[bucketIndex];
-		if (bucket == null) // If the buckets are empty a new list
-			table[bucketIndex] = bucket = new LinkedList<>();
-
-		Entry<K, V> existentEntry = bucketSeekEntry(bucketIndex, entry.key);
-		if (existentEntry == null) {
-			bucket.add(entry);
-			if (++size > threshold)
-				resizeTable();// if the table needs to be resied call the reizeTable function
-			return null;
-		} else {
-			V oldVal = existentEntry.value;
-			existentEntry.value = entry.value;
-			return oldVal;
-		}
-	}// end bucket insert entry
-
-	// Finds and returns a particular entry in a given bucket if it exists
-	private Entry<K, V> bucketSeekEntry(int bucketIndex, K key) {
-
-		if (key == null)
-			return null;
-		LinkedList<Entry<K, V>> bucket = table[bucketIndex];
-		if (bucket == null)
-			return null;
-		for (Entry<K, V> entry : bucket)
-			if (entry.key.equals(key))
-				return entry;
-		return null;
-	}// end bucketseek entry
-
+	
 	// Resizes the internal table holding buckets of entries
 	// when the size is greater than the threshold the table size is made to grow
 	// capacity is doubled for more spaces of keys
@@ -339,29 +417,25 @@ public class Entry<K, V> {
 		sb.append("}");
 		return sb.toString();
 	}// end to string
-
-	/*public static void main(String[] args) {
-
-		HashTableWithSeparateChaining map = new HashTableWithSeparateChaining();
-
-		map.insert("1", 1);
-		map.insert("2", 2);
-
-
-		map.insert("3", 3);
-
-		map.insert("4", 4);
-		map.insert("5", 5);
-		map.insert("6", 6);
-		map.insert("7", 7);
-		map.insert("8", 8);
-		map.insert("9", 9);
-
-
-
-		System.out.println(map.remove("3"));
-
-
-	}*/
-
+	
+	public static void main(String [] alex) {
+		
+		HashTableWithSeparateChaining<Integer,Character> map = new HashTableWithSeparateChaining();
+		
+		System.out.println(map.insert(5, 'a'));
+		System.out.println(map.insert(6, 'b'));
+		
+		System.out.println(map.insert(7, 'a'));
+		System.out.println(map.insert(8, 'b'));
+		System.out.println(map.insert(9, 'a'));
+		System.out.println(map.insert(0, 'b'));
+		System.out.println(map.insert(5, 'a'));
+		System.out.println(map.insert(6, 'b'));
+		System.out.println(map.get(5));
+		
+		//Random Numbers 
+		
+		
+		
+	}//end main
 }// end class
