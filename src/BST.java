@@ -95,10 +95,10 @@ public class BST<T extends Comparable<T>> {
 
             // node with two children: Get the inorder successor (smallest
             // in the right subtree
-            node.value = getMin(root.right, tracker).value;
+            node.value = getMin(node.right).value;
 
             // Delete the inorder successor
-            root.right = remove(node.right, node.value, tracker);
+            node.right = remove(node.right, node.value, tracker);
 
         }
         return node;
@@ -307,55 +307,48 @@ public class BST<T extends Comparable<T>> {
     public Tracker getMax(){
         Tracker tracker = new Tracker("getMax");
         tracker.setStartTime();
-        Node<T> output = getMax(this.root, tracker);
+        T output = getMax(this.root);
         tracker.setEndTime();
-        tracker.setFuncOutput((output == null ? "none" : output.value).toString());
+        tracker.setFuncOutput((output == null ? "none" : output.toString()));
         return tracker;
     }
 
 
     /**
      * Find the max value from the tree
-     * @param tracker An object to keep track of comparisons, data swaps, etc
      * @param node root of the tree
      * @return the max value
      */
-    public Node<T> getMax(Node<T> node, Tracker tracker){
+    public T getMax(Node<T> node){
         while (node.right != null){
-            //count the number of nodes traversed
-            tracker.incNodesTraversed();
             node = node.right;
         }
-        return node;
+        if( node != null )
+            return node.value;
+        return null;
     }
 
 
     /**
      * Get the min value from a tree but return a count of its operations instead.
-     * Tracks comparisons, data movements, number of nodes traversed etc
+     * Will start from the root node
      * @return A Tracker obj
      */
-    public Tracker getMin(){
-        Tracker tracker = new Tracker("getMin");
-        tracker.setStartTime();
-        Node<T> output = getMin(root, tracker);
-        tracker.setEndTime();
-        tracker.setFuncOutput((output == null ? "none" : output.value).toString());
-        return tracker;
+    public Node<T> getMin(){
+        return getMin(root);
     }
 
 
     /**
      * Find the min value from the tree
-     * @param tracker An object to keep track of comparisons, data swaps, etc
      * @param node the root node of the tree
      * @return the min value
      */
-    public Node<T> getMin(Node<T> node, Tracker tracker){
+    public Node<T> getMin(Node<T> node){
         while (node.left != null){
-            tracker.incNodesTraversed();
             node = node.left;
         }
+
         return node;
     }
 

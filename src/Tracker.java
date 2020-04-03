@@ -61,7 +61,7 @@ public class Tracker {
      * Returns the difference of endTime and startTime
      * @return endTime - startTime
      */
-    public Long getTotalTimeMilli(){
+    public Long getTotalNanoTime(){
         if( endTime != null && startTime != null  ){
             return endTime - startTime;
         }
@@ -94,7 +94,7 @@ public class Tracker {
      * automatically stores the current time in milliseconds
      */
     public void setStartTime(){
-        this.startTime = System.currentTimeMillis();
+        this.startTime = System.nanoTime();
     }
 
 
@@ -102,7 +102,7 @@ public class Tracker {
      * automatically stores the current time in milliseconds
      */
     public void setEndTime(){
-        this.endTime = System.currentTimeMillis();
+        this.endTime = System.nanoTime();
     }
 
     public String getFuncOutput() {
@@ -182,13 +182,13 @@ public class Tracker {
         return "Operation Name:            " + this.operationName +
                 (this.parameters.equals("") ? ""  : "\nParameter/s value/s:       " + this.parameters)     +
                 (this.funcOutput.equals("") ? ""  : "\nOutput:                    " + this.funcOutput)     +
-                (this.nodesTraversed < 0   ? ""  : "\nNumber of nodes traversed: " + this.nodesTraversed) +
-                (this.dataMovement < 0     ? ""  : "\nSwaps/Data moved:          " + this.dataMovement)   +
-                (this.comparisons < 0      ? ""  : "\nNumber of comparisons:     " +this.comparisons)     +
+                (this.nodesTraversed < 0    ? ""  : "\nNumber of nodes traversed: " + this.nodesTraversed) +
+                (this.dataMovement   < 0    ? ""  : "\nSwaps/Data moved:          " + this.dataMovement)   +
+                (this.comparisons    < 0    ? ""  : "\nNumber of comparisons:     " +this.comparisons)     +
 
-                "\nStart time:                " + this.startTime + " milliseconds " +
-                "\nEnd time:                  " + this.endTime +  " milliseconds " +
-                "\nTotal time:                " + getTotalTimeMilli() + "  milliseconds\n";
+//                "\nStart time:                " + this.startTime + " nanoseconds " +
+//                "\nEnd time:                  " + this.endTime +  " nanoseconds " +
+                "\nTotal time:                " + getTotalNanoTime() + "  nanoseconds\n";
     }
 
 }
