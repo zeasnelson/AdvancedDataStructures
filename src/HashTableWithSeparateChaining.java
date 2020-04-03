@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 	
 	
-	private class Entry<K, V> {
+	public class Entry<K, V> {
 		
 		  int hash; //hash
 		  K key;	//keys
