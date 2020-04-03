@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 	
 	
-	private class Entry<K, V> {
+	public class Entry<K, V> {
 		
 		  int hash; //hash
 		  K key;	//keys
@@ -193,9 +193,8 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 		
 		Tracker tracker = new Tracker("insert");
 		tracker.setStartTime();
-		
+
 		Entry<K, V> NEntry = new Entry<>(key, value); // otherwise create a new entry with the key and value
-		
 		int bucketIndex = normalizeIndex(NEntry.hash);// normalize the index with a hash
 		V output =  bucketInsertEntry(bucketIndex, NEntry, tracker);// return to the bucket
 		tracker.setEndTime();
@@ -204,7 +203,7 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 			tracker.setFuncOutput(output.toString());
 		}
 		return tracker;
-		
+
 	}// end insert
 	
 	
@@ -216,8 +215,7 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 			table[bucketIndex] = bucket = new LinkedList<>();
 
 		Entry<K, V> existentEntry = bucketSeekEntry(bucketIndex, entry.key);
-		
-		
+
 		if (existentEntry == null) {
 			bucket.add(entry);
 			if (++size > threshold)
@@ -228,6 +226,7 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 			tracker.setComparisons((long)index);
 			return null;	
 		} else {
+
 			V oldVal = existentEntry.value;
 			existentEntry.value = entry.value;
 			
@@ -240,7 +239,6 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 			return oldVal;
 		}
 	}// end bucket insert entry
-	
 
 	// keys must exist otherwise returns null
 	public Tracker get(K key) {
@@ -264,6 +262,7 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 		
 		 tracker.setEndTime();
 		 tracker.setFuncOutput(output.toString());
+
 		if (output != null)
 			return tracker;// if the value is not equal to null return that values
 		return null;// otherwise return null as in the value wasent found
@@ -320,9 +319,6 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 			}
 			return returnEntry;
 		}// end bucketseek entry
-	
-	
-
 	// Removes a key from the map and returns the value.
 	public Tracker remove(K key) {
 
@@ -419,23 +415,77 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 	}// end to string
 	
 	public static void main(String [] alex) {
-		
-		HashTableWithSeparateChaining<Integer,Character> map = new HashTableWithSeparateChaining();
-		
-		System.out.println(map.insert(5, 'a'));
-		System.out.println(map.insert(6, 'b'));
-		
-		System.out.println(map.insert(7, 'a'));
-		System.out.println(map.insert(8, 'b'));
-		System.out.println(map.insert(9, 'a'));
-		System.out.println(map.insert(0, 'b'));
-		System.out.println(map.insert(5, 'a'));
-		System.out.println(map.insert(6, 'b'));
-		System.out.println(map.get(5));
-		
-		//Random Numbers 
-		
-		
-		
+
+		//Random Numbers and sequential values
+		HashTableWithSeparateChaining<Integer,Integer> sequentialNumbers1000 = new HashTableWithSeparateChaining();
+		HashTableWithSeparateChaining<Integer,Integer> sequentialNumbers10000 = new HashTableWithSeparateChaining();
+
+		//random
+		HashTableWithSeparateChaining<Integer,Integer> Random1000 = new HashTableWithSeparateChaining();
+		HashTableWithSeparateChaining<Integer,Integer> Random10000 = new HashTableWithSeparateChaining();
+
+
+		//Reading from a File
+		HashTableWithSeparateChaining<Integer,Character> Fileread = new HashTableWithSeparateChaining();
+
+
+
+		Random Rand = new Random();
+		//insert 1000 and 10000 and corona.txt
+
+		int n = 1000;
+		for(int i = 0; i< n; i++ ) {
+			sequentialNumbers1000.insert(i,(Rand.nextInt(1000)+1));
+		}
+			//print out of n = 10 of the first map
+		System.out.println("First hashmap with n = 1,000 "+sequentialNumbers1000.insert(1000,(Rand.nextInt(1000)+1)));
+		System.out.println(sequentialNumbers1000.get(999)); //search
+		System.out.print( sequentialNumbers1000.remove(998)); //delete
+
+
+		n = 10000;
+		for(int i = 0; i< n; i++ ) {
+			sequentialNumbers10000.insert(i,Rand.nextInt(10000));
+		}
+		System.out.println("hashmap n = 10,000 "+sequentialNumbers10000.insert(10000,Rand.nextInt(10000)+1));
+		System.out.println(sequentialNumbers10000.get(9999)); //search
+		System.out.print( sequentialNumbers10000.remove(9998));//delete
+
+
+
+		///////-------------------------------->Random 1000, Random 10 000
+
+
+		n = 1000;
+
+		int SaveMe = 0;
+		for(int i = 0; i< n; i++ ) {
+			Random1000.insert(i,SaveMe = Rand.nextInt(1000));
+		}
+		System.out.println("second hashmap with n = 1,000 "+Random1000.insert(1000,(Rand.nextInt(1000)+1)));
+		System.out.println(Random1000.get(SaveMe)); //search
+		System.out.print( Random1000.remove(SaveMe));//delete
+
+
+		 n = 10000;
+		for(int i = 0; i < n; i++ ) {
+			Random10000.insert(i,(SaveMe = Rand.nextInt(10000)+1));
+		}
+		System.out.println("second hashmap with n = 10,000 "+Random10000.insert(10000,(Rand.nextInt(10000)+1)));
+		System.out.println(Random10000.get(SaveMe)); //search
+		System.out.print( Random10000.remove(SaveMe));//delete
+
+		//Reading from a file
+		n=0;
+		//Read text file
+		FileIO.setIo("coronavirus.txt");
+		int c = FileIO.getNextChar();
+		while( c != -1 ){
+			c = FileIO.getNextChar();
+			Fileread.insert(n++,(char)c);
+		}//end while
+
+		//place one more in the map to see comparions
+		System.out.println("Total number of characters in the file are:" +(n-1)+" "+Fileread.insert(n++, '~'));
 	}//end main
 }// end class
