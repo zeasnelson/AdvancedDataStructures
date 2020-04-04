@@ -1,8 +1,6 @@
 
 public class Test {
 
-
-
     public static void testTrees(int n){
         //create trees
         AVL<Integer> AVLTree = new AVL<>();
@@ -26,7 +24,6 @@ public class Test {
         System.out.println(binarySearchTree.remove(n));
         System.out.println(binarySearchTree.contains(n-1));
         System.out.println(binarySearchTree.get(n-1));
-
 
     }
 
@@ -57,9 +54,6 @@ public class Test {
         System.out.println(textBST.remove('7'));
         System.out.println(textBST.contains('8'));
         System.out.println(textBST.get('@'));
-
-
-        System.out.println(textBST.getNodeCount() + " node count");
     }
 
 
