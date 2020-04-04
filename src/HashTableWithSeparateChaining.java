@@ -3,29 +3,28 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
-	
-	
+
 	public class Entry<K, V> {
-		
+
 		  int hash; //hash
 		  K key;	//keys
 		  V value;  //values
-	
+
 		  public Entry(K key, V value) {
 		    this.key = key;
 		    this.value = value;
 		    this.hash = key.hashCode();
 		  }
-	
+
 		  // We are not overriding the Object equals method
 		  // No casting is required with this method.
-		  
-		  //equals method not being overidden 
+
+		  //equals method not being overidden
 		  public boolean equals(Entry<K, V> other) {
 		    if (hash != other.hash) return false;
 		    return key.equals(other.key);
 		  }
-		  
+
 		  //print out the the link of key 
 		  @Override
 		  public String toString() {
@@ -35,6 +34,7 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 
 	private static final int DefaultCapacity = 1;
 	private static final double DefaultLoadFactor = 0.75;
+	//0.75
 
 	// load factor = (items in table)/(size of the table)
 	private double LoadFactor; // we need a load factor which can't be zero
@@ -179,7 +179,6 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 	 * the overflow bucket.
 	 * 
 	 */
-
 	// Returns true/false depending on whether a key is in the hash table
 	public boolean hasKey(K key) {
 		int bucketIndex = normalizeIndex(key.hashCode()); // normalize the index with the nomalize index function
@@ -205,13 +204,12 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 		return tracker;
 
 	}// end insert
-	
-	
+
 	private V bucketInsertEntry(int bucketIndex, Entry<K, V> entry, Tracker tracker) {
 
 		LinkedList<Entry<K, V>> bucket = table[bucketIndex];
 		
-		if (bucket == null) // If the buckets are empty a new list
+		if (bucket == null) // If the buckets are empty create a new list
 			table[bucketIndex] = bucket = new LinkedList<>();
 
 		Entry<K, V> existentEntry = bucketSeekEntry(bucketIndex, entry.key);
@@ -234,8 +232,7 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 			int index = bucket.indexOf(existentEntry);
 			index++;
 			tracker.setComparisons((long)index);
-			
-			
+
 			return oldVal;
 		}
 	}// end bucket insert entry
@@ -277,6 +274,7 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 			if (bucket == null)
 				return null;
 			for (Entry<K, V> entry : bucket)
+
 				if (entry.key.equals(key))
 					return entry;
 			return null;
@@ -413,7 +411,7 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 		sb.append("}");
 		return sb.toString();
 	}// end to string
-	
+
 	public static void main(String [] alex) {
 
 		//Random Numbers and sequential values
@@ -478,14 +476,24 @@ public class HashTableWithSeparateChaining<K, V> implements Iterable<K> {
 		//Reading from a file
 		n=0;
 		//Read text file
+
+
+		int randomChar = 0;
 		FileIO.setIo("coronavirus.txt");
 		int c = FileIO.getNextChar();
 		while( c != -1 ){
 			c = FileIO.getNextChar();
 			Fileread.insert(n++,(char)c);
+
+			randomChar = n;
+
 		}//end while
+
+
 
 		//place one more in the map to see comparions
 		System.out.println("Total number of characters in the file are:" +(n-1)+" "+Fileread.insert(n++, '~'));
+		System.out.println("file read" +Fileread.get(randomChar));
+		System.out.println(Fileread.remove(randomChar));
 	}//end main
 }// end class
