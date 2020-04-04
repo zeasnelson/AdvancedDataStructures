@@ -27,6 +27,7 @@ public class Test {
         System.out.println(binarySearchTree.contains(n-1));
         System.out.println(binarySearchTree.get(n-1));
 
+
     }
 
 
@@ -56,6 +57,9 @@ public class Test {
         System.out.println(textBST.remove('7'));
         System.out.println(textBST.contains('8'));
         System.out.println(textBST.get('@'));
+
+
+        System.out.println(textBST.getNodeCount() + " node count");
     }
 
 
