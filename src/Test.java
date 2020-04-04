@@ -1,8 +1,6 @@
 
 public class Test {
 
-
-
     public static void testTrees(int n){
         //create trees
         AVL<Integer> AVLTree = new AVL<>();
